@@ -1,0 +1,35 @@
+@import '../../styles/index.module.scss';
+
+.container {
+  margin: 0 !important;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 800px;
+  min-height: 600px;
+  width: 950px;
+  text-align: center;
+  justify-self: center;
+  background-color: $primary-white;
+  border-radius: 10px;
+  align-self: center;
+  margin-top: 50px;
+  align-self: center;
+  margin-bottom: rem(100px);
+
+  @include mobile {
+    max-width: rem(340px);
+  }
+}
+
+.textfield-container {
+  margin-top: 80px;
+}

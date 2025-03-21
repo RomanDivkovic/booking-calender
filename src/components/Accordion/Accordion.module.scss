@@ -1,0 +1,51 @@
+@import '../../styles/index.module.scss';
+
+.accordion {
+  border: rem(1px) solid #ddd;
+  border-radius: rem(4px);
+  margin: rem(10px) rem(20px);
+
+  @include mobile {
+    flex-direction: column;
+    min-height: min-content;
+    margin: rem(10px) rem(20px);
+  }
+}
+
+.accordionHeader {
+  background-color: #f9f9f9;
+  padding: rem(10px);
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: rem(16px);
+  font-weight: bold;
+  border-radius: rem(4px) rem(4px) 0 0;
+}
+
+.accordionBody {
+  padding: rem(10px);
+  background-color: $primary-white;
+  border-top: rem(1px) solid #ddd;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between; // Säkerställer att titeln och ikonen är på motsatta sidor
+  align-items: center;
+  width: 100%;
+  background-color: #f1f1f1; // Justera efter dina designbehov
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.icon {
+  transition: transform 0.3s ease-in-out; // Smooth rotation
+}
+
+.rotate {
+  transform: rotate(180deg); // Roterar ikonen när den är öppen
+}

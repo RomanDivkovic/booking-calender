@@ -1,0 +1,59 @@
+@import '../../styles/index.module.scss';
+
+.container {
+  background-color: $primary-white;
+  box-shadow: 0 rem(2px) rem(4px) rgba(0, 0, 0, 0.1);
+  padding: rem(10px) rem(20px);
+  border-bottom: rem(2px) solid $primary-gold; // Line under the header
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.iconButton {
+  background: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  position: relative;
+
+  &:active {
+    background-color: #f4f1f1; // Visual feedback on click
+    cursor: pointer;
+  }
+
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+}

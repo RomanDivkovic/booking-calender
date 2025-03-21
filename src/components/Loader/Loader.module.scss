@@ -1,0 +1,12 @@
+@import '../../styles/index.module.scss';
+
+.heart {
+  width: rem(500px);
+  height: rem(500px);
+  align-self: center;
+
+  @include mobile {
+    width: rem(200px);
+    height: rem(200px);
+  }
+}

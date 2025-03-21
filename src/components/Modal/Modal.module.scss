@@ -1,0 +1,204 @@
+@import '../../styles/index.module.scss';
+
+.background {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(28, 111, 70, 0.6);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-base {
+  border-radius: rem(24px);
+  background-color: $primary-white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-lg {
+  @include mobile {
+    width: rem(342px);
+    max-height: rem(572px);
+  }
+
+  @include desktop {
+    width: rem(552px);
+    max-height: rem(692px);
+  }
+}
+
+.modal-md {
+  @include mobile {
+    width: rem(342px);
+    max-height: rem(572px);
+  }
+
+  @include desktop {
+    width: rem(408px);
+    max-height: rem(688px);
+  }
+}
+
+.modal-sm {
+  @include mobile {
+    width: rem(310px);
+    max-height: rem(456px);
+  }
+
+  @include desktop {
+    width: rem(360px);
+    max-height: rem(496px);
+  }
+}
+
+.content-base {
+  text-align: center;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.content-lg {
+  @include mobile {
+    margin: rem(24px) rem(24px) 0;
+  }
+
+  @include desktop {
+    margin: rem(40px) rem(40px) 0;
+  }
+}
+
+.content-md {
+  margin: rem(24px) rem(24px) 0;
+}
+
+.content-sm {
+  margin: 0 rem(24px) 0;
+
+  @include mobile {
+    margin-top: rem(32px);
+  }
+
+  @include desktop {
+    margin-top: rem(48px);
+  }
+}
+
+.buttons-base {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  gap: rem(16px);
+  border-bottom-left-radius: rem(24px);
+  border-bottom-right-radius: rem(24px);
+}
+
+.buttons-lg {
+  border-top: rem(1px) solid $secondary-middle-blue;
+
+  @include mobile {
+    padding: rem(16px) rem(24px);
+  }
+
+  @include desktop {
+    padding: rem(24px) rem(96px);
+  }
+}
+
+.buttons-md {
+  border-top: rem(1px) solid $secondary-middle-blue;
+
+  @include mobile {
+    padding: rem(16px) rem(24px);
+  }
+
+  @include desktop {
+    padding: rem(24px);
+  }
+}
+
+.buttons-sm {
+  padding: rem(32px) rem(24px) 0;
+
+  @include mobile {
+    padding-bottom: rem(24px);
+  }
+
+  @include desktop {
+    padding-bottom: rem(32px);
+  }
+}
+
+$animation-duration: 0.5s;
+
+.background-open {
+  display: flex;
+  opacity: 1;
+  animation: open $animation-duration;
+}
+
+@keyframes open {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.background-close {
+  display: flex;
+  opacity: 0;
+  animation: close $animation-duration;
+}
+
+@keyframes close {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.modal-open {
+  animation: slide-up $animation-duration;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.modal-close {
+  animation: slide-down $animation-duration;
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}

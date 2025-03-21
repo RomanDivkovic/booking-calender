@@ -1,0 +1,17 @@
+@import '../../styles/index.module.scss';
+
+.box {
+  background-color: $primary-white;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.embedded-container {
+  @extend .container;
+}

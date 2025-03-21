@@ -1,0 +1,336 @@
+@import '../../styles/index.module.scss';
+
+$text-primary: #ffffff;
+$text-secondary: #0d3050;
+$text-black: #2b2c24;
+$text-gold: #838c39;
+$text-disabled: #f9fafb;
+$text-error: #a80000;
+$text-grey: #818181;
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../assets/fonts/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400;
+  src: url('../../assets/fonts/Inter-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../../assets/fonts/Inter-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../assets/fonts/Inter-Bold.woff2') format('woff2');
+}
+
+.h1-plus {
+  color: $text-primary;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+
+  @include mobile {
+    font-size: rem(48);
+    line-height: rem(48);
+  }
+
+  @include desktop {
+    font-size: rem(64);
+    line-height: rem(64);
+  }
+}
+
+.h1 {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: rem(48);
+  line-height: rem(48);
+
+  @include mobile {
+    font-size: rem(32);
+    line-height: rem(32);
+  }
+
+  @include desktop {
+    font-size: rem(48);
+    line-height: rem(48);
+  }
+}
+
+.h1-white {
+  color: $text-primary;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: rem(48);
+  line-height: rem(48);
+
+  @include mobile {
+    font-size: rem(32);
+    line-height: rem(32);
+  }
+
+  @include desktop {
+    font-size: rem(48);
+    line-height: rem(48);
+  }
+}
+
+.h2 {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+
+  @include mobile {
+    font-size: rem(24);
+    line-height: rem(24);
+  }
+
+  @include desktop {
+    font-size: rem(32);
+    line-height: rem(32);
+  }
+}
+
+.h3 {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+
+  @include mobile {
+    font-size: rem(20);
+    line-height: rem(24);
+  }
+
+  @include desktop {
+    font-size: rem(20);
+    line-height: rem(24);
+  }
+}
+
+.h3-white {
+  color: $text-primary;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+
+  @include mobile {
+    font-size: rem(20);
+    line-height: rem(24);
+  }
+
+  @include desktop {
+    font-size: rem(20);
+    line-height: rem(24);
+  }
+}
+
+.h4 {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+
+  @include mobile {
+    font-size: rem(16);
+    line-height: rem(24);
+  }
+
+  @include desktop {
+    font-size: rem(16);
+    line-height: rem(24);
+  }
+}
+
+.h5 {
+  color: $text-primary;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: rem(14);
+  line-height: rem(24);
+}
+
+.p {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(16);
+  line-height: rem(24);
+}
+
+.wide {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(16);
+  line-height: rem(24);
+  letter-spacing: rem(0.25);
+}
+
+.sm {
+  color: $text-primary;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(14);
+  line-height: rem(16);
+}
+
+.xs {
+  color: $text-primary;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(12);
+  line-height: rem(16);
+}
+
+.p-white {
+  color: $text-primary;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(16);
+  line-height: rem(24);
+  text-decoration: none;
+}
+
+.em {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: rem(16);
+  line-height: rem(24);
+}
+
+.label {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(16);
+  line-height: rem(24);
+  letter-spacing: rem(0.25);
+}
+
+.input-error {
+  font-family: 'Inter', sans-serif;
+  color: $text-error;
+  font-size: rem(16);
+  line-height: rem(24);
+  letter-spacing: rem(0.25);
+}
+
+.label-error {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(16);
+  line-height: rem(24);
+  letter-spacing: rem(0.25);
+  color: $text-error;
+}
+
+.span {
+  color: $text-black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: rem(20);
+  line-height: rem(32);
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.weight-400 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.weight-600 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.weight-700 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.font-size-xs {
+  font-size: rem(12);
+}
+
+.font-size-sm {
+  font-size: rem(14);
+}
+
+.font-size-md {
+  font-size: rem(16);
+}
+
+.font-size-lg {
+  font-size: rem(18);
+}
+
+.font-size-xl {
+  font-size: rem(20);
+}
+
+.line-height-xs {
+  line-height: rem(16);
+}
+
+.line-height-sm {
+  line-height: rem(20);
+}
+
+.line-height-md {
+  line-height: rem(24);
+}
+
+.line-height-lg {
+  line-height: rem(28);
+}
+
+.line-height-xl {
+  line-height: rem(32);
+}
+
+.letter-spacing-sm {
+  letter-spacing: rem(0.1);
+}
+
+.letter-spacing-md {
+  letter-spacing: rem(0.2);
+}
+
+.letter-spacing-lg {
+  letter-spacing: rem(0.5);
+}
+
+.letter-spacing-xl {
+  letter-spacing: rem(1);
+}
+
+.display-inline {
+  display: inline;
+}
+
+.display-block {
+  display: block;
+}

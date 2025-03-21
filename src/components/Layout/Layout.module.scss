@@ -1,0 +1,14 @@
+@import '../../styles/index.module.scss';
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: '100%';
+  min-width: '100%';
+  background-color: $base-bg;
+}
+
+// .main {
+//   flex: 1;
+//   padding: rem(24);
+// }

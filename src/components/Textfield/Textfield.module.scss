@@ -1,0 +1,93 @@
+@import '../../styles/index.module.scss';
+@font-face {
+  font-family: 'Inter';
+  src: url('../../assets/fonts/Inter-Regular.woff2');
+}
+
+.text-field-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .label {
+    text-align: left;
+    width: 100%;
+
+    font-size: rem(14px);
+  }
+}
+
+.text-field {
+  border-radius: rem(4px);
+  border-style: solid;
+  box-sizing: border-box;
+  padding: rem(12px) rem(16px);
+  border: rem(1.5px) solid $gold-secondary-light;
+  width: 100%;
+  font-family: 'Proxima Nova';
+  font-size: rem(16px);
+  line-height: rem(24px);
+  color: $primary-gold;
+  min-width: rem(250px);
+  font-weight: bold;
+  text-align: left;
+
+  &::placeholder {
+    color: $primary;
+    opacity: 1;
+    text-align: left;
+  }
+
+  &:focus {
+    outline: none;
+    border: rem(1.5px) solid $primary-gold;
+  }
+}
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; // Justera innehåll till vänster
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: rem(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  text-align: left; // Justera felmeddelande till vänster
+  font-family: 'Inter';
+  font-size: rem(12);
+  line-height: rem(16);
+  color: $text-error;
+  font-style: normal;
+}
+
+.text-field-container {
+  margin-bottom: 1rem;
+}
+
+.text-field-error {
+  border: rem(1.5px) solid $text-error;
+  color: $text-error;
+
+  &::placeholder {
+    color: $error;
+  }
+}
+
+.error-message {
+  color: $error;
+  font-size: rem(12);
+  line-height: rem(16);
+  margin-top: rem(4px);
+}

@@ -1,0 +1,147 @@
+$background: #efecec;
+$secondary-bg: #f7ebeb;
+
+$primary-gold: #c89a4b;
+$primary-black: #211d1b;
+$primary-navy: #6f869c;
+$primary-navy-disabled: #81909f;
+$primary-white: #ffffff;
+$primary-pink: #edb5d5;
+$primary-green: #3f895c;
+
+$primary: #060a0fd6;
+
+$secondary-navy: #535889;
+
+$secondary-gold: #d5ae6c;
+$gold-hover: #d3aa63;
+$gold-pressed: #e9bf76;
+$gold-active: #6e6c2b;
+
+$gold-disabled: #504f1fa5;
+
+$secondary-green: #689078;
+$green-hover: #668b6f;
+$green-pressed: #126031;
+$green-active: #2e6227;
+
+$green-bg: #b4c3b8;
+
+$green-secondary-light: #c7f1c2ac;
+$green-secondary-middle: #1d6b14;
+$green-secondary-dark: #1e371b;
+
+$gold-secondary-light: #e4d856;
+$gold-secondary-middle: #b6bb33;
+$gold-secondary-dark: #7f771e;
+
+$secondary-pink-light: #dbc7d2;
+$secondary-pink-dark: #ad7d83;
+
+$secondary-middle-blue: #bad1ee;
+$secondary-light-blue: #e2e9f5;
+$secondary-barbel-blue: #f0f4fa;
+$secondary-middle-gray: #e2dee6;
+$secondary-light-gray: #f9f8fa;
+$secondary-middle-green: #cfe9ca;
+$secondary-light-green: #f9faf6;
+
+$extra-middle-salmon: #ead4cb;
+$extra-light-salmon: #f0e7e3;
+$extra-middle-corn: #fef5e3;
+$extra-light-corn: #fffaf1;
+
+$success: #40806a;
+$error: #b00000;
+$error-hover: #b01717;
+$error-focus: #cf0000;
+$error-pressed: #850000;
+$error-disabled: #a68282;
+$text-error: #a80000;
+
+$disabled-text: rgba(13, 48, 80, 0.66);
+
+$base-black: #333333;
+$base-white: #f9fafb;
+$base-bg: #f3f3f3;
+$base-secodary-bg: #fbfbfb;
+$base-grey: #878585;
+$base-grey-frame: #a09f9f;
+
+$accents-hover-blue: #246ec8;
+$accents-focused: #81aada;
+$accents-pressed: #275284;
+
+//TODO: Remove when re-design project is complete. Font-size of root element needs to be set to keep the size of rem()
+$html-font-size: 16px;
+
+@use 'sass:math';
+
+@function stripUnit($value) {
+  @return math.div($value, $value * 0 + 1);
+}
+
+@function rem($pxValue) {
+  @return #{math.div(stripUnit($pxValue), stripUnit($html-font-size))}rem;
+}
+
+//Breakpoints
+$mobile-min-width: 0px;
+$mobile-max-width: rem(1200);
+$desktop-min-width: rem(1200);
+
+@mixin mobile {
+  @media (min-width: #{$mobile-min-width}) and (max-width: #{$mobile-max-width}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-min-width}) {
+    @content;
+  }
+}
+
+:export {
+  primaryGold: $primary-gold;
+  primaryWhite: $primary-white;
+  primary-navy: $primary-navy;
+
+  secondary-middle-green: $secondary-middle-green;
+  secondary-navy: $secondary-navy;
+
+  secondaryMiddleBlue: $secondary-middle-blue;
+  secondaryLightBlue: $secondary-light-blue;
+  secondaryMiddleGray: $secondary-middle-gray;
+  secondaryLightGray: $secondary-light-gray;
+  secondaryMiddleGreen: $secondary-middle-green;
+  secondaryLightGreen: $secondary-light-green;
+  secondaryGold: $secondary-gold;
+
+  secondaryLightGold: $gold-secondary-light;
+  secondaryMiddleGold: $gold-secondary-middle;
+  secondaryDarkGold: $gold-secondary-dark;
+
+  primary: $primary;
+
+  extraMiddleSalmon: $extra-middle-salmon;
+  extraLightSalmon: $extra-light-salmon;
+  extraMiddleCorn: $extra-middle-corn;
+  extraLightCorn: $extra-light-corn;
+
+  success: $success;
+  error: $error;
+  textError: $text-error;
+
+  disabled: $gold-disabled;
+  accentsHoverBlue: $accents-hover-blue;
+  baseBlack: $base-black;
+  baseWhite: $base-white;
+  baseBg: $base-bg;
+  base-secondary-bg: $base-secodary-bg;
+  base-grey: $base-grey;
+  baseGreyFrame: $base-grey-frame;
+  mobileMinWidth: $mobile-min-width;
+  mobileMaxWidth: $mobile-max-width;
+  desktopMinWidth: $desktop-min-width;
+}

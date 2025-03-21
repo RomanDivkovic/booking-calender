@@ -1,0 +1,126 @@
+@import '../../styles/index.module.scss';
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: rem(-2px) 0 rem(5px) rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  &.desktop {
+    width: 20%;
+  }
+
+  &.mobile {
+    width: 100%;
+  }
+
+  &.slide-in {
+    transform: translateX(0);
+  }
+
+  &.slide-out {
+    transform: translateX(100%);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: rem(10px);
+}
+
+.close-button {
+  background: none;
+  border-color: $primary-gold;
+  cursor: pointer;
+  border-radius: rem(50px);
+  border-color: transparent;
+
+  &:active {
+    background-color: #ededed;
+    border-width: rem(1px);
+  }
+}
+
+.padding {
+  padding: 20px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: rem(10px);
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.1s;
+  padding: rem(10px);
+  text-decoration: none;
+  border-radius: rem(15px);
+  color: inherit;
+  position: relative;
+
+  &.list-item-pressed {
+    background-color: #f0f0f0;
+    border-radius: rem(15px);
+    transform: translateY(2px);
+  }
+
+  &.list-item-active {
+    background-color: #d0d0d0;
+    border-radius: rem(15px);
+    transform: translateY(2px);
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+    border-radius: rem(15px);
+  }
+
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    position: relative;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+}

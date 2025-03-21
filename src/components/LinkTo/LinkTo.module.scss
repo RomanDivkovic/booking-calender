@@ -1,0 +1,65 @@
+@import '../../styles/index.module.scss';
+
+$text-primary: #c89a4b;
+
+.default {
+  text-decoration: none;
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  color: $text-primary;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+
+.expand {
+  width: 100%;
+}
+
+.animation {
+  position: relative;
+  padding-bottom: rem(2px);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: rem(2px);
+    background-color: $primary-gold;
+    visibility: hidden;
+    transition: 120ms linear;
+    transform: scaleX(0);
+  }
+
+  &:hover::after,
+  :focus::after {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+}
+
+.secondary-animation {
+  position: relative;
+  padding-bottom: rem(2px);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: rem(2px);
+    background-color: $primary-white;
+    visibility: hidden;
+    transition: 120ms linear;
+    transform: scaleX(0);
+  }
+
+  &:hover::after,
+  :focus::after {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+}

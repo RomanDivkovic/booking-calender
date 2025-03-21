@@ -1,0 +1,250 @@
+@import '../../styles/index.module.scss';
+
+.base {
+  border-radius: rem(20px);
+  border: none;
+  box-sizing: border-box;
+  padding: rem(12px) rem(32px);
+  height: rem(48px);
+  min-width: rem(168px);
+  font-family: 'Inter-Bold', sans-serif;
+  font-size: rem(14px);
+  font-weight: 700;
+  letter-spacing: rem(1px);
+  line-height: rem(16px);
+  text-transform: uppercase;
+  font-style: normal;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus-visible {
+    outline: rem(4px) solid $accents-focused;
+  }
+}
+
+.tiny {
+  height: rem(24px); // Justera höjden
+  min-width: rem(34px);
+  padding: rem(4px) rem(12px);
+  font-size: rem(12px);
+  border-radius: rem(12px);
+
+  &:hover {
+    background-color: $gold-hover;
+  }
+
+  &:active {
+    background-color: $gold-active;
+  }
+
+  &:focus-visible {
+    outline: rem(2px) solid $accents-focused;
+  }
+
+  &-disabled {
+    background-color: $gold-disabled;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+.small-base {
+  height: rem(40px);
+  padding: rem(8px) rem(24px);
+  border-radius: rem(24px);
+  border-color: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: rem(12px);
+  font-weight: 700;
+  letter-spacing: rem(1px);
+  line-height: rem(16px);
+  text-transform: uppercase;
+  align-items: center;
+  text-align: center;
+
+  &:focus-visible {
+    outline: rem(4px) solid $accents-focused;
+  }
+}
+
+.small {
+  @extend .small-base;
+  color: $primary-white;
+  background-color: $primary-gold;
+
+  &:hover {
+    background-color: $gold-hover;
+  }
+
+  &:active {
+    background-color: $gold-active;
+  }
+
+  &-disabled {
+    background-color: $gold-disabled;
+    pointer-events: none;
+    cursor: default;
+
+    &:hover {
+      background-color: $gold-disabled;
+    }
+
+    &:focus {
+      background-color: $gold-disabled;
+      outline: 0;
+    }
+  }
+}
+
+.primary {
+  @extend .base;
+  color: $primary-white;
+  background-color: $primary-gold;
+
+  &:hover {
+    background-color: $gold-hover;
+  }
+
+  &:active {
+    background-color: $gold-active;
+  }
+
+  &-disabled {
+    background-color: $gold-disabled;
+    pointer-events: none;
+    cursor: default;
+
+    &:hover {
+      background-color: $gold-disabled;
+    }
+
+    &:focus {
+      background-color: $gold-disabled;
+      outline: 0;
+    }
+  }
+}
+
+.secondary {
+  @extend .base;
+  background-color: transparent;
+  color: $primary-green;
+  border: rem(1px) solid;
+
+  &:hover {
+    border-color: $accents-hover-blue;
+    color: $accents-hover-blue;
+  }
+
+  &:active {
+    border-color: $accents-pressed;
+    color: $secondary-middle-gray;
+  }
+}
+
+.light {
+  border-color: $secondary-middle-blue;
+}
+
+.dark {
+  border-color: $primary;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: row;
+}
+
+.text {
+  @extend .base;
+  border-color: transparent;
+  background-color: transparent;
+  color: $primary-gold;
+
+  // Underline
+  & .button-text {
+    box-shadow: 0 rem(2px) 0 $primary-gold;
+  }
+
+  &:hover {
+    background-color: $accents-hover-blue;
+    color: $primary-white;
+
+    & .button-text {
+      box-shadow: 0 rem(2px) 0 $primary-white;
+    }
+  }
+
+  &:active {
+    background-color: $accents-pressed;
+  }
+
+  &-disabled {
+    background-color: transparent;
+    color: rgba(13, 48, 80, 0.5);
+
+    & .button-text {
+      box-shadow: 0 rem(2px) 0 rgba(13, 48, 80, 0.5);
+    }
+
+    pointer-events: none;
+    cursor: default;
+
+    &:hover {
+      color: rgba(13, 48, 80, 0.5);
+      background-color: transparent;
+    }
+
+    &:focus {
+      color: rgba(13, 48, 80, 0.5);
+      background-color: transparent;
+      outline: 0;
+    }
+  }
+}
+
+.danger {
+  @extend .base;
+  color: $primary-white;
+  background-color: $error;
+  border: rem(1px) solid $error;
+
+  &:hover {
+    background-color: $error-hover;
+  }
+
+  &:active {
+    background-color: $error-pressed;
+  }
+
+  &-disabled {
+    background-color: $error-disabled;
+    border-color: $error-disabled;
+    pointer-events: none;
+    cursor: default;
+
+    &:hover {
+      background-color: $error-disabled;
+      border-color: $error-disabled;
+    }
+
+    &:focus {
+      background-color: $error-disabled;
+      border-color: $error-disabled;
+      outline: 0;
+    }
+  }
+}
+
+.button-content {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.expand {
+  width: 100%;
+}

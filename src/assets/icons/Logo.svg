@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#3F895C" />
+
+  <!-- Text: Betting with Friends -->
+  <text x="512" y="300" font-family="Arial" font-size="150" fill="white" text-anchor="middle">BETTING</text>
+  <text x="512" y="450" font-family="Arial" font-size="70" fill="white" text-anchor="middle">WITH FRIENDS</text>
+
+  <!-- Decorative elements -->
+  <path d="M512 200 Q540 250 570 200" fill="none" stroke="white" stroke-width="10" />
+  <path d="M512 800 Q540 750 570 800" fill="none" stroke="white" stroke-width="10" />
+  <!-- Additional decorative elements can be added here -->
+</svg>

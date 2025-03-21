@@ -1,0 +1,134 @@
+@import '../../styles/index.module.scss';
+
+//Desktop
+.desktop {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: $primary-gold;
+  align-items: center;
+  width: 100%;
+
+  &-logged-in {
+    padding-bottom: rem(48px);
+  }
+}
+
+.content {
+  max-width: rem(1128px);
+}
+
+.column-desktop {
+  display: flex;
+  flex-direction: row;
+  min-height: rem(196px);
+  align-self: center;
+
+  @include mobile {
+    flex-direction: column;
+    min-height: min-content;
+  }
+}
+
+.section-row {
+  @extend .column-desktop;
+  margin-top: rem(50px);
+  gap: rem(300px);
+  justify-content: center;
+}
+
+.column-sections {
+  list-style-type: none;
+}
+
+// Mobile
+.mobile-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: $primary-gold;
+  padding: rem(60px) rem(24px) rem(60px) rem(24px);
+}
+
+.mobile-container-signed-in {
+  @extend .mobile-container;
+  // flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.text-div {
+  margin-top: rem(50px);
+}
+
+.first-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: rem(50px);
+}
+
+.section-margin {
+  margin-top: rem(30px);
+}
+
+// Text style
+.text-content {
+  text-decoration: none;
+  align-self: center;
+}
+
+.link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  color: $base-white;
+
+  font-size: rem(14px);
+  font-weight: 400;
+  line-height: rem(24px);
+  list-style-type: none;
+  margin: 0px;
+  text-decoration-color: $primary-gold;
+}
+
+.header-desktop {
+  color: $base-white;
+  font-family: 'Proxima Nova';
+  font-weight: 700;
+  font-size: rem(16px);
+  line-height: rem(24px);
+  text-transform: uppercase;
+  margin: 0px;
+
+  @include mobile {
+    line-height: rem(18px);
+    font-size: rem(14px);
+  }
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  color: $base-white;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  // font-weight: 400;
+  font-size: rem(14px);
+  line-height: rem(24px);
+  padding-top: rem(24px);
+  text-decoration: underline;
+  text-decoration-color: $primary-gold;
+}
+
+.link-to {
+  text-decoration: transparent;
+  text-decoration-color: $primary-white;
+}
+
+.box {
+  width: max-content;
+}
