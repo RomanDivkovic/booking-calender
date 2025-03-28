@@ -38,6 +38,7 @@ type ButtonProps = {
   childMargin?: Margin;
   iconColor?: IconColors;
   iconSize?: IconSizes;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -56,7 +57,8 @@ const Button: React.FC<ButtonProps> = ({
   iconRight,
   childMargin,
   iconSize,
-  iconColor
+  iconColor,
+  type = 'button'
 }) => {
   const root = classNames({
     [styles.primary]: variant === 'primary',
@@ -79,7 +81,7 @@ const Button: React.FC<ButtonProps> = ({
   const marginStyles = marginToCssProp(margin);
 
   const TextContent = () => (
-    <div className={styles.textContent}>
+    <>
       {iconLeft && (
         <Icon
           name={iconLeft}
@@ -88,11 +90,13 @@ const Button: React.FC<ButtonProps> = ({
           margin={{ b: 3, r: 5 }}
         />
       )}
-      <div
-        className={styles['button-text']}
-        style={{ margin: marginToCssProp(childMargin) }}
-      >
-        {loading ? <ClipLoader color="white" size={34} /> : children}
+      <div className={styles.textContent}>
+        <div
+          className={styles['button-text']}
+          style={{ margin: marginToCssProp(childMargin) }}
+        >
+          {loading ? <ClipLoader color="white" size={34} /> : children}
+        </div>
       </div>
       {iconRight && (
         <Icon
@@ -102,7 +106,7 @@ const Button: React.FC<ButtonProps> = ({
           size={iconSize}
         />
       )}
-    </div>
+    </>
   );
 
   const Button = () => (
@@ -111,6 +115,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={loading || disabled}
       style={{ margin: marginStyles }}
+      type={type}
     >
       {TextContent()}
     </button>

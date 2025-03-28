@@ -1,0 +1,65 @@
+.googleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  cursor: pointer;
+  transition:
+    border 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
+  border: 2px solid transparent;
+
+  &:hover {
+    border: 2px solid #ccc;
+  }
+
+  &:active {
+    border: 2px solid #999;
+    background-color: #f5f5f5;
+  }
+
+  //   img {
+  //     width: 100%;
+  //     height: 100%;
+  //   }
+}
+
+.icon {
+  min-height: min-content;
+  min-width: min-content;
+  &:hover {
+    border: 2px solid #ccc;
+  }
+
+  &:active {
+    border: 2px solid #999;
+    background-color: #f5f5f5;
+  }
+}
+
+.googleIconButton {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  &:hover {
+    border: 2px solid #ccc;
+  }
+
+  &:active {
+    border: 2px solid #999;
+    background-color: #f5f5f5;
+  }
+}
