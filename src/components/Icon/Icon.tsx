@@ -26,6 +26,7 @@ export type IconNames =
   | 'search'
   | 'nav-arrow-up'
   | 'nav-arrow-right'
+  | 'arrow-right'
   | 'nav-arrow-down'
   | 'nav-arrow-left'
   | 'chevron-up'
@@ -51,6 +52,7 @@ export type IconNames =
   | 'mma'
   | 'person-boxing'
   | 'betting'
+  | 'google'
   | string
   | undefined;
 
@@ -91,6 +93,7 @@ interface Props {
   margin?: Margin;
   className?: string;
   onClick?: () => void;
+  flipIconDirection?: boolean;
 }
 
 export const Icon = ({
@@ -99,13 +102,15 @@ export const Icon = ({
   color = 'primary',
   margin,
   className,
+  flipIconDirection,
   onClick
 }: Props) => {
   return (
     <div
       style={{
         margin: marginToCssProp(margin),
-        cursor: 'pointer'
+        cursor: 'pointer',
+        ...(flipIconDirection ? { transform: 'rotate(180deg)' } : {})
       }}
       className={className} // Använd className här
       onClick={onClick}

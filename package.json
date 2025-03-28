@@ -19,6 +19,7 @@
     "classnames": "^2.5.1",
     "lottie-react": "^2.4.1",
     "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0",
     "react-spinners": "^0.15.0"

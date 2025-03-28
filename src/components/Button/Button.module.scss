@@ -25,6 +25,30 @@
   }
 }
 
+.secondary-disabled {
+  @extend .secondary;
+  background-color: $gold-disabled;
+  pointer-events: none;
+  cursor: default;
+}
+
+.link-button-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter-Bold', sans-serif;
+  font-size: rem(14px);
+  font-weight: 700;
+  border: none;
+  text-decoration: underline;
+  height: rem(48px);
+  min-width: rem(168px);
+
+  &:focus-visible {
+    outline: rem(4px) solid $accents-pressed;
+  }
+}
+
 .tiny {
   height: rem(24px); // Justera höjden
   min-width: rem(34px);
