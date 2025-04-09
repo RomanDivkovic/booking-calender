@@ -69,7 +69,7 @@ const Header: React.FC = () => {
             <>
               <Button
                 tiny
-                onClick={() => navigate('/calender')}
+                onClick={() => navigate('/calendar')}
                 variant="primary"
               >
                 📅

@@ -7,6 +7,8 @@ import BookingsPage from '../pages/Booking/BookingPage';
 import ProtectedRoute from './ProtectedRoute'; // 👈 Importera skyddad route
 import { RegisterPage } from '../pages/Auth/RegisterPage';
 import { ContactPage } from '../pages/Contact/ContactPage';
+import FullCalender from '../pages/Calender/CalendarPage';
+import AboutPage from '../pages/Contact/AboutPage';
 
 export default function AppRouter() {
   return (
@@ -21,8 +23,10 @@ export default function AppRouter() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/calendar" element={<FullCalender />} />
             <Route path="/bookings" element={<BookingsPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
           </Route>
         </Routes>
       </Layout>

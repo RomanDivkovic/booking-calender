@@ -31,7 +31,7 @@ const _sections: SectionType[] = [
     links: [
       {
         display: 'Shared calender',
-        to: `/calender`
+        to: `/calendar`
       },
       {
         display: 'Your information',
@@ -47,8 +47,12 @@ const _sections: SectionType[] = [
     header: 'Contact',
     links: [
       {
-        display: 'About ',
+        display: 'Contact ',
         to: CONTACT.ROOT_PATH
+      },
+      {
+        display: 'About ',
+        to: CONTACT.about
       }
     ]
   },
@@ -79,7 +83,7 @@ export const Footer = ({ signedIn, sections = _sections }: FooterProps) => {
   const { isDesktop } = useDeviceSize();
   const navigate = useNavigate();
 
-  const text = `Small calendar and booking system to be able and use the wash room without bothering each other or trying to do it art the same time. Easy to book and easy to see when someone has booked`;
+  const text = `Small calendar and booking system to be able and use the wash room without bothering each other or trying to do it at the same time. Easy to book and easy to see when someone has booked`;
 
   return isDesktop ? (
     <footer data-track="footer_desktop" className={desktopClassNames}>
