@@ -121,3 +121,11 @@ export const cleanEmail = (email: string) => {
   const namePart = email.split('@')[0];
   return namePart;
 };
+
+export const getUserColor = (userId: string): string => {
+  const colorPalette = ['#f87171', '#60a5fa', '#34d399', '#fbbf24', '#a78bfa'];
+  const hash = userId
+    .split('')
+    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return colorPalette[hash % colorPalette.length];
+};

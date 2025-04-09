@@ -2,10 +2,44 @@ import Typography from '../../components/Typography/Typography';
 import { FormEvent, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import Button from '../../components/Button/Button';
-import TextField from '../../components/Textfield/Textfield';
 import styles from './LoginPage.module.scss';
 import LinkTo from '../../components/LinkTo/LinkTo';
 import { Icon } from '../../components/Icon/Icon';
+import TextField from '../../components/TextField/TextField';
+import CustomAlert from '../../components/Alert/Alert';
+import { useNavigate } from 'react-router-dom'; // ✅ Glömd import
+
+const createProfileIfNotExists = async (user: any, displayName?: string) => {
+  const { id, user_metadata, email } = user;
+
+  const { data: existingProfile, error: fetchError } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', id)
+    .single();
+
+  if (!existingProfile) {
+    const getRandomColor = (): string => {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+
+    await supabase.from('profiles').insert({
+      id,
+      display_name:
+        displayName ||
+        user_metadata?.full_name ||
+        user_metadata?.name ||
+        email ||
+        'User',
+      color: getRandomColor()
+    });
+  }
+};
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -16,6 +50,8 @@ export const RegisterPage = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [repeatPasswordError, setRepeatPasswordError] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const navigate = useNavigate(); // ✅
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
@@ -43,14 +79,17 @@ export const RegisterPage = () => {
       email,
       password,
       options: {
-        data: {
-          displayName
-        }
+        data: { displayName }
       }
     });
 
     if (signUpError) {
       setError(signUpError.message);
+    } else {
+      if (data.user) {
+        await createProfileIfNotExists(data.user, displayName);
+        setShowAlert(true); // ✅ Visa alert när konto skapas
+      }
     }
   };
 
@@ -63,51 +102,70 @@ export const RegisterPage = () => {
               color="primary"
               name="arrow-right"
               size="md"
-              margin={{ r: 4 }}
+              margin={{ r: 4, b: 3 }}
               flipIconDirection={true}
             />
             Back
           </LinkTo>
         </div>
-        <Typography variant="h1">Registrering</Typography>
-        <>
-          <form className={styles.form} onSubmit={handleRegister}>
-            <TextField
-              label="Display Name"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-            />
-            <TextField
-              label="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              isError={!!emailError}
-              errorMessage={emailError}
-            />
-            <TextField
-              label="Lösenord"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              isError={!!passwordError}
-              errorMessage={passwordError}
-            />
-            <TextField
-              label="Lösenord"
-              type="password"
-              value={repeatPassword}
-              onChange={(e) => setRepeatPassword(e.target.value)}
-              isError={!!repeatPasswordError}
-              errorMessage={repeatPasswordError}
-            />
-            <Button type="submit" variant="primary">
-              Registrera
-            </Button>
-          </form>
-          {error && <Typography variant="label-error">{error}</Typography>}
-          {/* {success && <Typography variant="label-success">{success}</Typography>} */}
-        </>
+        <Typography align="center" margin={{ b: 3 }} variant="h1">
+          Registrering
+        </Typography>
+
+        <form className={styles.form} onSubmit={handleRegister}>
+          <TextField
+            label="Display Name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
+          <TextField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            isError={!!emailError}
+            errorMessage={emailError}
+          />
+          <TextField
+            label="Lösenord"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            isError={!!passwordError}
+            errorMessage={passwordError}
+          />
+          <TextField
+            label="Upprepa lösenord"
+            type="password"
+            value={repeatPassword}
+            onChange={(e) => setRepeatPassword(e.target.value)}
+            isError={!!repeatPasswordError}
+            errorMessage={repeatPasswordError}
+          />
+          <Button type="submit" variant="primary">
+            Registrera
+          </Button>
+        </form>
+
+        {error && <Typography variant="label-error">{error}</Typography>}
+
+        <CustomAlert
+          visible={showAlert}
+          onClose={() => {
+            setShowAlert(false);
+            navigate('/login'); // ✅ Navigera vidare efter alert stängs
+          }}
+          title="Konto skapat!"
+          body="Verifiera din e-post innan du loggar in."
+          buttons={[
+            {
+              text: 'Okej',
+              onPress: () => {
+                // valfri logik
+              }
+            }
+          ]}
+        />
       </div>
     </div>
   );

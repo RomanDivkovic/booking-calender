@@ -1,12 +1,11 @@
 import { SetStateAction, useState } from 'react';
 import TextField from '../../components/Textfield/Textfield';
 import Button from '../../components/Button/Button';
-import { signIn, signUp } from './auth';
+import { signIn } from './auth';
 import Typography from '../../components/Typography/Typography';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import styles from './LoginPage.module.scss';
-import GoogleButton from '../../components/Button/GoogleButton';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -17,11 +16,50 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
+  const createProfileIfNotExists = async (user: any) => {
+    const { id, user_metadata, email } = user;
+    console.log('Checking profile for user:', id);
+
+    const { data: existingProfile, error: fetchError } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', id)
+      .single();
+
+    if (fetchError) {
+      console.warn('Error checking profile:', fetchError.message);
+    }
+
+    if (!existingProfile) {
+      const getRandomColor = (): string => {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      };
+
+      const insertResult = await supabase.from('profiles').insert({
+        id,
+        display_name:
+          user_metadata?.full_name || user_metadata?.name || email || 'User',
+        color: getRandomColor()
+      });
+
+      console.log('Inserted profile result:', insertResult);
+    }
+  };
+
   const handleSignIn = async () => {
     try {
       setEmailError('');
       setPasswordError('');
       await signIn(email, password);
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+      if (user) await createProfileIfNotExists(user);
     } catch (error: any) {
       setError(error.message);
       if (error.message.toLowerCase().includes('email')) {
@@ -38,7 +76,14 @@ export default function LoginPage() {
     });
     if (error) {
       setError(error.message);
+      return;
     }
+
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        await createProfileIfNotExists(session.user);
+      }
+    });
   };
 
   return (

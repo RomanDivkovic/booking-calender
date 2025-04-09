@@ -3,7 +3,8 @@ export const HOME = {
 };
 
 export const CONTACT = {
-  ROOT_PATH: '/contact'
+  ROOT_PATH: '/contact',
+  about: '/about'
 };
 
 export const PROFILE = {

@@ -14,7 +14,7 @@ interface Props {
   iconSize?: IconSizes;
   size?: ModalSizes;
   title: string | string[] | React.ReactNode;
-  text: string | string[] | React.ReactNode;
+  text?: string | string[] | React.ReactNode;
   align?: TextAligns;
   isOpen: boolean;
   handleClose: () => void;

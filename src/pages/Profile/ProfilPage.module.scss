@@ -1,0 +1,61 @@
+@import '../../styles/index.module.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: $background;
+  height: 100vh;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  height: 600px;
+  width: 600px;
+  background-color: $primary-white;
+  align-self: center;
+  margin-top: 50px;
+  align-items: center;
+
+  @include mobile {
+    width: rem(342px);
+  }
+}
+
+.textfield {
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  align-self: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  gap: rem(20px);
+  max-width: rem(150px);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-height: 800px;
+  min-height: 600px;
+  width: 950px;
+  text-align: center;
+  justify-self: center;
+  background-color: $primary-white;
+  border-radius: 10px;
+  align-self: center;
+  margin-top: 50px;
+  align-self: center;
+  margin-bottom: rem(100px);
+  align-items: center;
+
+  @include mobile {
+    max-width: rem(340px);
+  }
+}
