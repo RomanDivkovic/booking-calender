@@ -1,15 +1,13 @@
 import scss from './LoadingScreen.module.scss';
 import Typography from '../../components/Typography/Typography';
 import Loader from '../../components/Loader/Loader';
-import { useDeviceSize } from '../../utils/functions';
 
 type Props = {
   text?: string;
   standalone?: boolean;
 };
 
-export const LoadingScreen = ({ text, standalone: embedded }: Props) => {
-  const { isMobile } = useDeviceSize();
+export const LoadingScreen = ({ text }: Props) => {
   return (
     <div className={scss.box}>
       <div className={scss.container}>

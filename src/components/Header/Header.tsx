@@ -4,15 +4,14 @@ import { Logo } from '../Logo/Logo';
 import LinkTo from '../LinkTo/LinkTo';
 import { useDeviceSize } from '../../utils/functions';
 import { useNavigate } from 'react-router-dom';
-import Button from '..//';
-import { supabase } from '../../lib/supabase'; // 👈 Glöm inte importera!
+import Button from '../Button/Button';
+import { supabase } from '../../lib/supabase';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { isMobile } = useDeviceSize();
 
   const [signedIn, setSignedIn] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [displayName, setDisplayName] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,15 +35,6 @@ const Header: React.FC = () => {
 
     getUserInfo();
   }, []);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const HandleButtonClick = () => {
-    supabase.auth.signOut();
-    window.location.pathname = '/login';
-  };
 
   return (
     <header className={styles.container}>

@@ -95,7 +95,17 @@ const Typography = ({
 
   const marginStyles = marginToCssProp(margin);
 
-  const baseClasses = `${styles[variant]} ${styles[size]} ${styles[weight]} ${styles[lineHeight]} ${styles[letterSpacing]} ${styles[transform]} ${styles[align]} ${styles[display]}`;
+  const baseClasses = [
+    styles[variant as keyof typeof styles],
+    styles[size as keyof typeof styles],
+    styles[weight as keyof typeof styles],
+    styles[lineHeight as keyof typeof styles],
+    styles[letterSpacing as keyof typeof styles],
+    styles[transform as keyof typeof styles],
+    styles[align as keyof typeof styles],
+    styles[display as keyof typeof styles],
+    className
+  ].join(' ');
 
   return (
     <Tag

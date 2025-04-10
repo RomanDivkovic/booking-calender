@@ -35,27 +35,30 @@ const CalendarPage = () => {
   const [newDescription, setNewDescription] = useState('');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [newDuration, setNewDuration] = useState(1);
-  const [newStartTime, setNewStartTime] = useState('08:00');
+  const [newStartTime, setNewStartTime] = useState<string | null>('08:00');
 
   useEffect(() => {
     const fetchEvents = async () => {
       const { data: eventsData, error } = await supabase
         .from('bookings')
         .select(
-          'id, title, date, user_id, description, duration, profiles(color, display_name)'
+          'id, title, date, user_id, description, duration, profiles!inner(color, display_name)'
         );
 
       if (!error && eventsData) {
-        const eventsWithColor = eventsData.map((e) => ({
-          id: e.id,
-          title: e.title,
-          start: e.date,
-          color: e.profiles?.color || '#ccc',
-          description: e.description,
-          user_id: e.user_id,
-          display_name: e.profiles?.display_name,
-          duration: e.duration
-        }));
+        const eventsWithColor = eventsData.map((e: any) => {
+          const profile = e.profiles || {};
+          return {
+            id: e.id,
+            title: e.title,
+            start: e.date,
+            color: profile.color || '#ccc',
+            description: e.description,
+            user_id: e.user_id,
+            display_name: profile.display_name || 'Okänd',
+            duration: e.duration
+          };
+        });
 
         setEvents(eventsWithColor);
       }
@@ -104,6 +107,11 @@ const CalendarPage = () => {
 
     if (!user || !newEventDate || !newTitle) {
       alert('Alla fält måste fyllas i.');
+      return;
+    }
+
+    if (!newStartTime) {
+      alert('Du måste välja en starttid.');
       return;
     }
 
@@ -331,7 +339,6 @@ const CalendarPage = () => {
             </div>
             <TextField
               label="Antal timmar"
-              type="number"
               value={newDuration}
               onChange={(e) => setNewDuration(Number(e.target.value))}
             />
@@ -347,10 +354,20 @@ const CalendarPage = () => {
 
 function renderEventContent(eventInfo: any) {
   return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-    </>
+    <div
+      style={{
+        backgroundColor: eventInfo.event.backgroundColor,
+        color: 'white',
+        padding: '2px 4px',
+        borderRadius: '4px',
+        fontSize: '12px',
+        width: '100%',
+        cursor: 'pointer'
+      }}
+    >
+      <b>{eventInfo.timeText}</b> <br />
+      <span>{eventInfo.event.title}</span>
+    </div>
   );
 }
 

@@ -5,14 +5,14 @@ import Button from '../../components/Button/Button';
 import styles from './LoginPage.module.scss';
 import LinkTo from '../../components/LinkTo/LinkTo';
 import { Icon } from '../../components/Icon/Icon';
-import TextField from '../../components/TextField/TextField';
+import TextField from '../../components/Textfield/Textfield';
 import CustomAlert from '../../components/Alert/Alert';
 import { useNavigate } from 'react-router-dom'; // ✅ Glömd import
 
 const createProfileIfNotExists = async (user: any, displayName?: string) => {
   const { id, user_metadata, email } = user;
 
-  const { data: existingProfile, error: fetchError } = await supabase
+  const { data: existingProfile } = await supabase
     .from('profiles')
     .select('id')
     .eq('id', id)

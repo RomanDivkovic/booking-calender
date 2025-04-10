@@ -31,28 +31,34 @@ export default function HomePage() {
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState<string | null>('12:00');
   const [newDuration, setNewDuration] = useState(1);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+    null
+  );
+  const [isUserEvent, setIsUserEvent] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
       const { data, error } = await supabase
         .from('bookings')
         .select(
-          'id, title, date, description, duration, user_id, profiles(color)'
+          'id, title, date, description, duration, user_id, profiles!inner(color)'
         );
 
       if (!error && data) {
         setEvents(
-          data.map((e) => {
+          data.map((e: any) => {
             const start = new Date(e.date);
             const end = new Date(start);
             end.setHours(start.getHours() + (e.duration || 1));
+            const profile = e.profiles || {};
 
             return {
               id: e.id,
               title: e.title,
               start: start.toISOString(),
               end: end.toISOString(),
-              color: e.profiles?.color || '#ccc',
+              color: profile.color || '#ccc',
               description: e.description,
               user_id: e.user_id
             };
@@ -107,10 +113,15 @@ export default function HomePage() {
         user_id: user.id,
         duration: newDuration
       })
-      .select('id, title, date, description, duration, profiles(color)')
+      .select(
+        'id, title, date, description, duration, user_id, profiles!inner(color)'
+      )
       .single();
 
     if (!error && data) {
+      const profile = Array.isArray(data.profiles)
+        ? data.profiles[0]
+        : data.profiles || {};
       setEvents((prev) => [
         ...prev,
         {
@@ -121,7 +132,7 @@ export default function HomePage() {
             new Date(data.date).getTime() + newDuration * 3600000
           ).toISOString(),
           description: data.description,
-          color: data.profiles?.color || '#ccc'
+          color: profile?.color || '#ccc'
         }
       ]);
       setIsCreateModalOpen(false);
@@ -131,6 +142,29 @@ export default function HomePage() {
       setNewTime('12:00');
       setNewDuration(1);
     }
+  };
+
+  const handleEventClick = async (clickInfo: any) => {
+    const event = clickInfo.event;
+
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    const isOwner = !!user && event.extendedProps.user_id === user.id;
+
+    setSelectedEvent({
+      id: event.id,
+      title: event.title,
+      start: event.startStr,
+      end: event.endStr,
+      description: event.extendedProps.description,
+      color: event.backgroundColor,
+      user_id: event.extendedProps.user_id
+    });
+
+    setIsUserEvent(isOwner);
+    setIsModalOpen(true);
   };
 
   return (
@@ -143,6 +177,7 @@ export default function HomePage() {
           events={events}
           selectable
           dateClick={handleDateClick}
+          eventClick={handleEventClick}
           height="auto"
         />
       </div>
@@ -186,6 +221,32 @@ export default function HomePage() {
           Skapa
         </Button>
       </Modal>
+
+      {selectedEvent && (
+        <Modal
+          isOpen={isModalOpen}
+          handleClose={() => setIsModalOpen(false)}
+          iconName="calendar"
+          size="md"
+          title={selectedEvent.title}
+          text={selectedEvent.description || 'Ingen beskrivning'}
+          closeButton={{ text: 'Stäng', variant: 'text' }}
+        >
+          {isUserEvent && (
+            <p>
+              {new Date(selectedEvent.start).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+              })}{' '}
+              -{' '}
+              {new Date(selectedEvent.end).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </p>
+          )}
+        </Modal>
+      )}
     </div>
   );
 }

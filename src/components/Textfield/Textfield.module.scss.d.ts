@@ -40,5 +40,6 @@ declare const classNames: {
   readonly "toggle-password": "toggle-password";
   readonly "text-field-error": "text-field-error";
   readonly "error-message": "error-message";
+  readonly "text-field-disabled": "text-field-disabled";
 };
 export = classNames;

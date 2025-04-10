@@ -6,15 +6,9 @@ interface TextAreaProps {
   label: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  error?: boolean;
 }
 
-const TextArea: React.FC<TextAreaProps> = ({
-  label,
-  value,
-  onChange,
-  error
-}) => {
+const TextArea: React.FC<TextAreaProps> = ({ label, value, onChange }) => {
   return (
     <div className={scss.container}>
       <Typography variant="label">{label}</Typography>
