@@ -152,7 +152,7 @@ const RenderSections: React.FC<{ data: SectionType }> = ({
       <Typography margin={{ b: 0 }} variant="h5">
         {header}
       </Typography>
-      <nav className={styles['column-section']}>
+      <nav className={styles.columnSections}>
         {linkData &&
           linkData.map((data, i) => (
             <SectionLink key={i.toString()} data={data} />

@@ -33,6 +33,7 @@ declare const classNames: {
   readonly mobileMinWidth: "mobileMinWidth";
   readonly mobileMaxWidth: "mobileMaxWidth";
   readonly desktopMinWidth: "desktopMinWidth";
+  readonly columnSections: "columnSections";
   readonly desktop: "desktop";
   readonly "desktop-logged-in": "desktop-logged-in";
   readonly content: "content";
