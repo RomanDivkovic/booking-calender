@@ -347,10 +347,20 @@ const CalendarPage = () => {
 
 function renderEventContent(eventInfo: any) {
   return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-    </>
+    <div
+      style={{
+        backgroundColor: eventInfo.event.backgroundColor,
+        color: 'white',
+        padding: '2px 4px',
+        borderRadius: '4px',
+        fontSize: '12px',
+        width: '100%',
+        cursor: 'pointer'
+      }}
+    >
+      <b>{eventInfo.timeText}</b> <br />
+      <span>{eventInfo.event.title}</span>
+    </div>
   );
 }
 

@@ -31,6 +31,11 @@ export default function HomePage() {
   const [newDate, setNewDate] = useState('');
   const [newTime, setNewTime] = useState<string | null>('12:00');
   const [newDuration, setNewDuration] = useState(1);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+    null
+  );
+  const [isUserEvent, setIsUserEvent] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -133,6 +138,29 @@ export default function HomePage() {
     }
   };
 
+  const handleEventClick = async (clickInfo: any) => {
+    const event = clickInfo.event;
+
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    const isOwner = !!user && event.extendedProps.user_id === user.id;
+
+    setSelectedEvent({
+      id: event.id,
+      title: event.title,
+      start: event.startStr,
+      end: event.endStr,
+      description: event.extendedProps.description,
+      color: event.backgroundColor,
+      user_id: event.extendedProps.user_id
+    });
+
+    setIsUserEvent(isOwner);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className={styles.container}>
       <Typography variant="h1">Veckovy – Bokningar</Typography>
@@ -144,8 +172,35 @@ export default function HomePage() {
           selectable
           dateClick={handleDateClick}
           height="auto"
+          eventClick={handleEventClick}
         />
       </div>
+
+      {selectedEvent && (
+        <Modal
+          isOpen={isModalOpen}
+          handleClose={() => setIsModalOpen(false)}
+          iconName="calendar"
+          size="md"
+          title={selectedEvent.title}
+          text={selectedEvent.description || 'Ingen beskrivning'}
+          closeButton={{ text: 'Stäng', variant: 'text' }}
+        >
+          {isUserEvent && (
+            <p>
+              {new Date(selectedEvent.start).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+              })}{' '}
+              -{' '}
+              {new Date(selectedEvent.end).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </p>
+          )}
+        </Modal>
+      )}
 
       <Modal
         isOpen={isCreateModalOpen}

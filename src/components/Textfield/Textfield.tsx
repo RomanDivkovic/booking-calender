@@ -23,7 +23,7 @@ type TextFieldProps = {
   isError?: boolean;
   errorMessage?: string | undefined | null;
   margin?: Margin;
-  type?: 'text' | 'password' | 'email';
+  type?: 'text' | 'email' | 'password' | 'number';
 };
 
 const TextField: React.FC<TextFieldProps> = ({
