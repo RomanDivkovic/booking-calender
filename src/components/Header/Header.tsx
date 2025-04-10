@@ -4,10 +4,7 @@ import { Logo } from '../Logo/Logo';
 import LinkTo from '../LinkTo/LinkTo';
 import { useDeviceSize } from '../../utils/functions';
 import { useNavigate } from 'react-router-dom';
-import { Menu } from '../Menu/Menu';
-import { Icon } from '../Icon/Icon';
-import Button from '../Button/Button';
-import Section from '../Menu/Section';
+import Button from '..//';
 import { supabase } from '../../lib/supabase'; // 👈 Glöm inte importera!
 
 const Header: React.FC = () => {
