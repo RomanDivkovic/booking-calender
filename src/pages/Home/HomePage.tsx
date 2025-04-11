@@ -2,6 +2,8 @@ import Typography from '../../components/Typography/Typography';
 import styles from './Home.module.scss';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
@@ -85,9 +87,7 @@ export default function HomePage() {
 
     if (!user || !newDate || !newTitle || !newTime) return;
 
-    const [hours, minutes] = newTime.split(':').map(Number);
-    const startDate = new Date(`${newDate}T00:00:00`);
-    startDate.setHours(hours, minutes);
+    const startDate = new Date(`${newDate}T${newTime}`);
 
     const endDate = new Date(startDate);
     endDate.setHours(startDate.getHours() + newDuration);
@@ -172,8 +172,18 @@ export default function HomePage() {
       <Typography variant="h1">Veckovy – Bokningar</Typography>
       <div style={{ maxWidth: '900px', marginTop: '2rem' }}>
         <FullCalendar
-          plugins={[timeGridPlugin, interactionPlugin]}
+          plugins={[
+            timeGridPlugin,
+            dayGridPlugin,
+            listPlugin,
+            interactionPlugin
+          ]}
           initialView="timeGridWeek"
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          }}
           events={events}
           selectable
           dateClick={handleDateClick}
