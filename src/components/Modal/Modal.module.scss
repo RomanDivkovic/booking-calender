@@ -189,10 +189,11 @@ $animation-duration: 0.5s;
   }
 }
 
-.modal-close-down {
-  animation: slide-down $animation-duration;
+@include mobile {
+  .modal-close-down {
+    animation: fade-out $animation-duration;
+  }
 }
-
 @keyframes slide-down {
   0% {
     transform: translateY(0%);

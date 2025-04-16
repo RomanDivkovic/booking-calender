@@ -42,13 +42,13 @@ declare const classNames: {
   readonly "buttons-lg": "buttons-lg";
   readonly "buttons-md": "buttons-md";
   readonly "buttons-sm": "buttons-sm";
+  readonly "modal-close-down": "modal-close-down";
   readonly "content-base": "content-base";
   readonly "content-md": "content-md";
   readonly "buttons-base": "buttons-base";
   readonly "background-open": "background-open";
   readonly "background-close": "background-close";
   readonly "modal-open": "modal-open";
-  readonly "modal-close-down": "modal-close-down";
   readonly "modal-close-up": "modal-close-up";
   readonly "modal-close-fade": "modal-close-fade";
 };

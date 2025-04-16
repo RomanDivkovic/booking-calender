@@ -17,6 +17,7 @@ import TextArea from '../../components/Textarea/Textarea';
 
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
+import { useDeviceSize } from '../../utils/functions';
 
 type CalendarEvent = {
   id: string;
@@ -44,6 +45,8 @@ export default function HomePage() {
 
   const auth = getAuth();
   const user = auth.currentUser;
+
+  const { isMobile } = useDeviceSize();
 
   useEffect(() => {
     const bookingsRef = ref(db, 'bookings');
@@ -128,28 +131,29 @@ export default function HomePage() {
 
   return (
     <div className={styles.container}>
-      <Typography variant="h1">Veckovy – Bokningar</Typography>
-
-      <div style={{ maxWidth: '900px', marginTop: '2rem' }}>
-        <FullCalendar
-          plugins={[
-            timeGridPlugin,
-            dayGridPlugin,
-            listPlugin,
-            interactionPlugin
-          ]}
-          initialView="timeGridWeek"
-          headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-          }}
-          events={events}
-          selectable
-          dateClick={handleDateClick}
-          eventClick={handleEventClick}
-          height="auto"
-        />
+      {/* <Typography variant="h1">Veckovy – Bokningar</Typography> */}
+      <div className={styles['content-container']}>
+        <div className={`${styles.card} ${styles['card-3d']}`}>
+          <FullCalendar
+            plugins={[
+              timeGridPlugin,
+              dayGridPlugin,
+              listPlugin,
+              interactionPlugin
+            ]}
+            initialView="timeGridWeek"
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            }}
+            events={events}
+            selectable
+            dateClick={handleDateClick}
+            eventClick={handleEventClick}
+            height="auto"
+          />
+        </div>
       </div>
 
       {/* Skapa nytt event */}

@@ -33,6 +33,10 @@ declare const classNames: {
   readonly mobileMaxWidth: "mobileMaxWidth";
   readonly desktopMinWidth: "desktopMinWidth";
   readonly container: "container";
-  readonly card: "card";
+  readonly "content-container": "content-container";
+  readonly cardWrapper: "cardWrapper";
+  readonly card3D: "card3D";
+  readonly front: "front";
+  readonly back: "back";
 };
 export = classNames;
