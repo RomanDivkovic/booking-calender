@@ -1,44 +1,23 @@
 import Typography from '../../components/Typography/Typography';
 import { FormEvent, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { ref, set, get } from 'firebase/database';
+import { auth, db } from '../../../firebase';
 import Button from '../../components/Button/Button';
 import styles from './LoginPage.module.scss';
 import LinkTo from '../../components/LinkTo/LinkTo';
 import { Icon } from '../../components/Icon/Icon';
 import TextField from '../../components/Textfield/Textfield';
 import CustomAlert from '../../components/Alert/Alert';
-import { useNavigate } from 'react-router-dom'; // ✅ Glömd import
+import { useNavigate } from 'react-router-dom';
 
-const createProfileIfNotExists = async (user: any, displayName?: string) => {
-  const { id, user_metadata, email } = user;
-
-  const { data: existingProfile } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', id)
-    .single();
-
-  if (!existingProfile) {
-    const getRandomColor = (): string => {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    };
-
-    await supabase.from('profiles').insert({
-      id,
-      display_name:
-        displayName ||
-        user_metadata?.full_name ||
-        user_metadata?.name ||
-        email ||
-        'User',
-      color: getRandomColor()
-    });
+const getRandomColor = (): string => {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
+  return color;
 };
 
 export const RegisterPage = () => {
@@ -51,7 +30,7 @@ export const RegisterPage = () => {
   const [passwordError, setPasswordError] = useState('');
   const [repeatPasswordError, setRepeatPasswordError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const navigate = useNavigate(); // ✅
+  const navigate = useNavigate();
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
@@ -75,21 +54,30 @@ export const RegisterPage = () => {
       return;
     }
 
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { displayName }
-      }
-    });
+    try {
+      const userCred = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCred.user;
 
-    if (signUpError) {
-      setError(signUpError.message);
-    } else {
-      if (data.user) {
-        await createProfileIfNotExists(data.user, displayName);
-        setShowAlert(true); // ✅ Visa alert när konto skapas
+      await updateProfile(user, { displayName });
+
+      const profileRef = ref(db, `profiles/${user.uid}`);
+      const snapshot = await get(profileRef);
+
+      if (!snapshot.exists()) {
+        await set(profileRef, {
+          display_name: displayName || email || 'User',
+          color: getRandomColor()
+        });
       }
+
+      setShowAlert(true);
+    } catch (err: any) {
+      console.error('Registreringsfel:', err.message);
+      setError(err.message || 'Ett fel uppstod');
     }
   };
 
@@ -153,16 +141,14 @@ export const RegisterPage = () => {
           visible={showAlert}
           onClose={() => {
             setShowAlert(false);
-            navigate('/login'); // ✅ Navigera vidare efter alert stängs
+            navigate('/');
           }}
           title="Konto skapat!"
-          body="Verifiera din e-post innan du loggar in."
+          body="Du kan nu logga in med din e-post."
           buttons={[
             {
               text: 'Okej',
-              onPress: () => {
-                // valfri logik
-              }
+              onPress: () => {}
             }
           ]}
         />

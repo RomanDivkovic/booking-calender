@@ -1,5 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import {
+  getAuth,
+  signOut,
+  deleteUser,
+  onAuthStateChanged
+} from 'firebase/auth';
+import { getDatabase, ref, get, set, remove } from 'firebase/database';
 import Button from '../../components/Button/Button';
 import styles from './ProfilPage.module.scss';
 import { useEffect, useState } from 'react';
@@ -8,36 +14,29 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState('');
   const [color, setColor] = useState('');
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const auth = getAuth();
+  const db = getDatabase();
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const fallbackDisplayName =
-          user.user_metadata?.full_name ||
-          user.user_metadata?.display_name ||
-          user.email?.split('@')[0] ||
-          'User';
-        setDisplayName(fallbackDisplayName);
+        setUserId(user.uid);
 
-        const { data: profiles, error } = await supabase
-          .from('profiles')
-          .select('color')
-          .eq('id', user.id)
-          .limit(1);
+        const fallbackName =
+          user.displayName || user.email?.split('@')[0] || 'User';
+        setDisplayName(fallbackName);
 
-        const profile = profiles?.[0];
+        const profileRef = ref(db, `profiles/${user.uid}`);
+        const snapshot = await get(profileRef);
 
-        console.log('Profile data:', profile, 'Error:', error);
-
-        if (profile?.color) {
-          setColor(profile.color);
+        if (snapshot.exists()) {
+          const profile = snapshot.val();
+          if (profile.color) {
+            setColor(profile.color);
+          }
         } else {
-          console.log('Profile not found or color is null – creating one.');
-
           const getRandomColor = (): string => {
             const letters = '0123456789ABCDEF';
             let color = '#';
@@ -47,30 +46,21 @@ export default function ProfilePage() {
             return color;
           };
 
-          const color = getRandomColor();
-
-          const { error: insertError } = await supabase
-            .from('profiles')
-            .insert({
-              id: user.id,
-              display_name: fallbackDisplayName,
-              color
-            });
-
-          if (!insertError) {
-            setColor(color);
-          } else {
-            console.warn('Error creating profile:', insertError.message);
-          }
+          const newColor = getRandomColor();
+          await set(profileRef, {
+            displayName: fallbackName,
+            color: newColor
+          });
+          setColor(newColor);
         }
       }
-    };
+    });
 
-    getUserInfo();
+    return () => unsubscribe();
   }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut(auth);
     navigate('/login');
   };
 
@@ -78,20 +68,15 @@ export default function ProfilePage() {
     const confirmed = window.confirm(
       'Är du säker på att du vill ta bort ditt konto och all data? Detta går inte att ångra.'
     );
-    if (!confirmed) return;
-
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
-
-    if (!user) return;
+    if (!confirmed || !auth.currentUser || !userId) return;
 
     try {
-      await supabase.from('bookings').delete().eq('user_id', user.id);
-      await supabase.from('profiles').delete().eq('id', user.id);
+      // Ta bort från realtime database
+      await remove(ref(db, `bookings/${userId}`));
+      await remove(ref(db, `profiles/${userId}`));
 
-      // Note: This requires service_role key, only works server-side
-      await supabase.auth.admin.deleteUser(user.id);
+      // Ta bort själva kontot
+      await deleteUser(auth.currentUser);
 
       alert('Ditt konto har tagits bort.');
       navigate('/login');
@@ -123,7 +108,7 @@ export default function ProfilePage() {
 
         <div className={styles['button-container']}>
           <Button onClick={handleLogout} variant="primary">
-            sign out
+            Sign out
           </Button>
           <Button
             margin={{ t: 20 }}

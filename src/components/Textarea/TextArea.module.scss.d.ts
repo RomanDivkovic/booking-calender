@@ -4,7 +4,6 @@ declare const classNames: {
   readonly "primary-navy": "primary-navy";
   readonly "secondary-middle-green": "secondary-middle-green";
   readonly "secondary-navy": "secondary-navy";
-  readonly secondaryMiddleBlue: "secondaryMiddleBlue";
   readonly secondaryLightBlue: "secondaryLightBlue";
   readonly secondaryMiddleGray: "secondaryMiddleGray";
   readonly secondaryLightGray: "secondaryLightGray";

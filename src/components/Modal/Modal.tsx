@@ -53,7 +53,8 @@ export const Modal = ({
     [styles['modal-md']]: size === 'md',
     [styles['modal-sm']]: size === 'sm',
     [styles['modal-open']]: isOpen,
-    [styles['modal-close']]: closeModalAnimation
+    [styles['modal-close-down']]: closeModalAnimation && isMobile,
+    [styles['modal-close-up']]: closeModalAnimation && isDesktop
   });
   const contentClassNames = classNames({
     [styles['content-base']]: true,

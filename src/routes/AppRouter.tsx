@@ -4,7 +4,7 @@ import LoginPage from '../pages/Auth/LoginPage';
 import ProfilePage from '../pages/Profile/ProfilePage';
 import Layout from '../components/Layout/Layout';
 import BookingsPage from '../pages/Booking/BookingPage';
-import ProtectedRoute from './ProtectedRoute'; // 👈 Importera skyddad route
+import ProtectedRoute from './ProtectedRoute';
 import { RegisterPage } from '../pages/Auth/RegisterPage';
 import { ContactPage } from '../pages/Contact/ContactPage';
 import FullCalender from '../pages/Calender/CalendarPage';

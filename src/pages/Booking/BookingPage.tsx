@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, get, child } from 'firebase/database';
+import styles from './BookingPage.module.scss';
 
 type Booking = {
   id: string;
@@ -13,9 +15,8 @@ export default function BookingsPage() {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
+      const auth = getAuth();
+      const user = auth.currentUser;
 
       if (!user) {
         setBookings([]);
@@ -23,13 +24,27 @@ export default function BookingsPage() {
         return;
       }
 
-      const { data, error } = await supabase
-        .from('bookings')
-        .select('id, title, date')
-        .eq('user_id', user.id);
+      const db = getDatabase();
+      const bookingsRef = ref(db, 'bookings');
 
-      if (!error && data) {
-        setBookings(data);
+      try {
+        const snapshot = await get(bookingsRef);
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const filtered = Object.entries(data)
+            .filter(([_, value]: any) => value.user_id === user.uid)
+            .map(([id, value]: any) => ({
+              id,
+              title: value.title,
+              date: value.start?.split('T')[0] || 'okänt datum'
+            }));
+          setBookings(filtered);
+        } else {
+          setBookings([]);
+        }
+      } catch (error) {
+        console.error('Fel vid hämtning av bokningar:', error);
+        setBookings([]);
       }
 
       setLoading(false);
@@ -39,23 +54,28 @@ export default function BookingsPage() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Mina bokningar</h1>
-      <p>Här kan du se alla dina bokningar 📆</p>
+    <div className={styles.container}>
+      <div className={styles['content-container']}>
+        <h1 className="text-2xl font-bold">Mina bokningar</h1>
+        <p>Här kan du se alla dina bokningar 📆</p>
 
-      {loading ? (
-        <p>Laddar bokningar...</p>
-      ) : bookings.length === 0 ? (
-        <p>Inga bokningar hittades.</p>
-      ) : (
-        <ul className="mt-4 space-y-2">
-          {bookings.map((booking) => (
-            <li key={booking.id} className="border p-3 rounded bg-white shadow">
-              <strong>{booking.title}</strong> – {booking.date}
-            </li>
-          ))}
-        </ul>
-      )}
+        {loading ? (
+          <p>Laddar bokningar...</p>
+        ) : bookings.length === 0 ? (
+          <p>Inga bokningar hittades.</p>
+        ) : (
+          <ul className="mt-4 space-y-2">
+            {bookings.map((booking) => (
+              <li
+                key={booking.id}
+                className="border p-3 rounded bg-white shadow"
+              >
+                <strong>{booking.title}</strong> – {booking.date}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
