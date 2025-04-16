@@ -176,12 +176,7 @@ const SectionLink = ({ data: { to, display } }: Props) => {
   if (isWebUrl(to)) {
     return isDesktop ? (
       <div className={styles.box}>
-        <LinkTo
-          className={styles['link-to']}
-          reloadDocument
-          secondaryAnimation
-          to={to}
-        >
+        <LinkTo className={styles['link-to']} secondaryAnimation to={to}>
           <div className={styles.links}>
             <a
               target="_blank"
@@ -202,12 +197,7 @@ const SectionLink = ({ data: { to, display } }: Props) => {
       </div>
     ) : (
       <div className={styles.box}>
-        <LinkTo
-          className={styles['link-to']}
-          reloadDocument
-          secondaryAnimation
-          to={to}
-        >
+        <LinkTo className={styles['link-to']} secondaryAnimation to={to}>
           <div className={styles.links}>
             <a
               target="_blank"
@@ -224,19 +214,12 @@ const SectionLink = ({ data: { to, display } }: Props) => {
   }
   return (
     <div className={styles.box}>
-      <LinkTo
-        className={styles['link-to']}
-        reloadDocument
-        secondaryAnimation
-        to={to}
-      >
-        <Link reloadDocument className={styles.link} to={to}>
-          <div className={styles.links}>
-            <Typography size="xs" variant="p-white">
-              {display}
-            </Typography>
-          </div>
-        </Link>
+      <LinkTo className={styles['link-to']} secondaryAnimation to={to}>
+        <div className={styles.links}>
+          <Typography size="xs" variant="p-white">
+            {display}
+          </Typography>
+        </div>
       </LinkTo>
     </div>
   );

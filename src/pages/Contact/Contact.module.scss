@@ -1,0 +1,58 @@
+@import '../../styles/index.module.scss';
+
+.container {
+  //   margin: 0 !important;
+  padding: rem(20px);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, $primary-gold 0%, $primary-white 100%);
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(24px);
+  background-color: rgba($base-white, 0.95);
+  padding: rem(32px);
+  border-radius: rem(16px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  max-width: rem(500px);
+  width: 100%;
+
+  @include mobile {
+    padding: rem(20px);
+    border-radius: rem(12px);
+    box-shadow: none;
+    background-color: $base-white;
+  }
+}
+
+.card {
+  width: 100%;
+  padding: rem(20px);
+  background-color: $base-white;
+  border-radius: rem(16px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.12);
+  }
+
+  @include mobile {
+    padding: rem(16px);
+    border-radius: rem(12px);
+    gap: rem(4px);
+  }
+}

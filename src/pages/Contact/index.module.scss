@@ -4,18 +4,65 @@
   margin: 0 !important;
   padding: 0;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+.content-container {
   display: flex;
   flex-direction: column;
+  border-radius: 20px;
+  height: 600px;
+  width: 600px;
+  background-color: $primary-white;
+  align-self: center;
+  margin-top: 50px;
+
+  @include mobile {
+    width: rem(342px);
+  }
+}
+
+.cardWrapper {
+  width: rem(400px);
+  height: rem(300px);
+  perspective: 1200px;
+}
+
+.card3D {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: rotateY(180deg);
+  }
+}
+
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: rem(24px);
+  border-radius: rem(20px);
+  backface-visibility: hidden;
+  background-color: $base-white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-.card {
-  min-width: rem(1000px);
-  margin-top: rem(20px);
-  margin-bottom: rem(25px);
-
-  @include mobile {
-    min-width: rem(342px);
-  }
+.back {
+  transform: rotateY(180deg);
+  background-color: $primary-navy;
+  color: $base-white;
 }

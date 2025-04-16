@@ -35,6 +35,5 @@ declare const classNames: {
   readonly container: "container";
   readonly "content-container": "content-container";
   readonly card: "card";
-  readonly "card-3d": "card-3d";
 };
 export = classNames;

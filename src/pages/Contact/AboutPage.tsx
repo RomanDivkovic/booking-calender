@@ -4,9 +4,29 @@ import Typography from '../../components/Typography/Typography';
 function AboutPage() {
   return (
     <div className={styles.container}>
-      <div>
-        <Typography variant="h1">About</Typography>
-        <Typography variant="p">Testing</Typography>
+      <div className={styles.cardWrapper}>
+        <div className={styles.card3D}>
+          <div className={styles.front}>
+            <Typography variant="h1">Om oss</Typography>
+            <Typography variant="p">
+              Vi är en app för att boka gemensamma resurser som tvättstuga 🧺
+              eller andra hushållstjänster. Vår kalender synkar allt i realtid!
+              ⚡
+            </Typography>
+          </div>
+          <div className={styles.back}>
+            <Typography variant="h1">🔥 Tech stack</Typography>
+            <Typography variant="p">
+              React + TypeScript
+              <br />
+              Firebase Realtime DB
+              <br />
+              FullCalendar + Vercel
+              <br />
+              ❤️ by Roman
+            </Typography>
+          </div>
+        </div>
       </div>
     </div>
   );
