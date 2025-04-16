@@ -5,7 +5,7 @@ import LinkTo from '../LinkTo/LinkTo';
 import { useDeviceSize } from '../../utils/functions';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
-import { supabase } from '../../lib/supabase';
+import { getAuth } from 'firebase/auth';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -15,25 +15,18 @@ const Header: React.FC = () => {
   const [displayName, setDisplayName] = useState<string | null>(null);
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-
+    const auth = getAuth();
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setSignedIn(true);
-        setDisplayName(
-          user.user_metadata?.full_name ||
-            user.user_metadata?.display_name ||
-            user.email?.split('@')[0] ||
-            'User'
-        );
+        setDisplayName(user.displayName || user.email?.split('@')[0] || 'User');
       } else {
         setSignedIn(false);
+        setDisplayName(null);
       }
-    };
+    });
 
-    getUserInfo();
+    return () => unsubscribe();
   }, []);
 
   return (

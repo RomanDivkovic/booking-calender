@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+import { onValue, ref } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
+import { db } from '../../../firebase';
 import Typography from '../../components/Typography/Typography';
 import styles from './Home.module.scss';
 import FullCalendar from '@fullcalendar/react';
@@ -5,18 +9,17 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
 import { Modal } from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
 import TextField from '../../components/Textfield/Textfield';
 import TimePicker from 'react-time-picker';
-import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
 import TextArea from '../../components/Textarea/Textarea';
 
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
+
 type CalendarEvent = {
-  id?: string;
+  id: string;
   title: string;
   start: string;
   end: string;
@@ -31,7 +34,7 @@ export default function HomePage() {
   const [newTitle, setNewTitle] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [newDate, setNewDate] = useState('');
-  const [newTime, setNewTime] = useState<string | null>('12:00');
+  const [newTime, setNewTime] = useState<string>('12:00');
   const [newDuration, setNewDuration] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
     null
@@ -39,119 +42,75 @@ export default function HomePage() {
   const [isUserEvent, setIsUserEvent] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   useEffect(() => {
-    const fetchEvents = async () => {
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(
-          'id, title, date, description, duration, user_id, profiles!inner(color)'
-        );
+    const bookingsRef = ref(db, 'bookings');
+    const profilesRef = ref(db, 'profiles');
 
-      if (!error && data) {
-        setEvents(
-          data.map((e: any) => {
-            const start = new Date(e.date);
-            const end = new Date(start);
-            end.setHours(start.getHours() + (e.duration || 1));
-            const profile = e.profiles || {};
+    const unsubscribe = onValue(bookingsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
 
-            return {
-              id: e.id,
-              title: e.title,
-              start: start.toISOString(),
-              end: end.toISOString(),
-              color: profile.color || '#ccc',
-              description: e.description,
-              user_id: e.user_id
-            };
-          })
-        );
-      }
-    };
+      const allBookings = Object.entries(data).map(([id, booking]: any) => ({
+        id,
+        ...booking
+      }));
 
-    fetchEvents();
+      onValue(profilesRef, (profileSnap) => {
+        const profiles = profileSnap.val() || {};
+        const enriched = allBookings.map((booking) => ({
+          ...booking,
+          color: profiles?.[booking.user_id]?.color || '#ccc'
+        }));
+        setEvents(enriched);
+      });
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleDateClick = (arg: any) => {
-    const clickedDate = new Date(arg.dateStr);
-    const iso = clickedDate.toISOString().split('T')[0];
-    setNewDate(iso);
-    setNewTime('12:00'); // Default time
+    const dateStr = new Date(arg.dateStr).toISOString().split('T')[0];
+    setNewDate(dateStr);
+    setNewTime('12:00');
     setIsCreateModalOpen(true);
   };
 
   const handleCreateEvent = async () => {
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
-
     if (!user || !newDate || !newTitle || !newTime) return;
 
-    const startDate = new Date(`${newDate}T${newTime}`);
+    const [hour, min] = newTime.split(':').map(Number);
+    const start = new Date(`${newDate}T00:00:00`);
+    start.setHours(hour, min);
+    const end = new Date(start);
+    end.setHours(start.getHours() + newDuration);
 
-    const endDate = new Date(startDate);
-    endDate.setHours(startDate.getHours() + newDuration);
+    const bookingData = {
+      title: newTitle,
+      description: newDescription,
+      start: start.toISOString(),
+      end: end.toISOString(),
+      user_id: user.uid,
+      createdAt: new Date().toISOString()
+    };
 
-    // Check for overlapping
-    const overlapping = events.some((e) => {
-      const existingStart = new Date(e.start);
-      const existingEnd = new Date(e.end ?? existingStart);
-      return startDate < existingEnd && endDate > existingStart;
-    });
+    const { ref: dbRef, push, set } = await import('firebase/database');
+    const newRef = push(ref(db, 'bookings'));
+    await set(newRef, bookingData);
 
-    if (overlapping) {
-      alert('Tiden krockar med en annan bokning.');
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from('bookings')
-      .insert({
-        title: newTitle,
-        description: newDescription,
-        date: startDate.toISOString(),
-        user_id: user.id,
-        duration: newDuration
-      })
-      .select(
-        'id, title, date, description, duration, user_id, profiles!inner(color)'
-      )
-      .single();
-
-    if (!error && data) {
-      const profile = Array.isArray(data.profiles)
-        ? data.profiles[0]
-        : data.profiles || {};
-      setEvents((prev) => [
-        ...prev,
-        {
-          id: data.id,
-          title: data.title,
-          start: data.date,
-          end: new Date(
-            new Date(data.date).getTime() + newDuration * 3600000
-          ).toISOString(),
-          description: data.description,
-          color: profile?.color || '#ccc'
-        }
-      ]);
-      setIsCreateModalOpen(false);
-      setNewTitle('');
-      setNewDescription('');
-      setNewDate('');
-      setNewTime('12:00');
-      setNewDuration(1);
-    }
+    setIsCreateModalOpen(false);
+    setNewTitle('');
+    setNewDescription('');
+    setNewDate('');
+    setNewTime('12:00');
+    setNewDuration(1);
   };
 
-  const handleEventClick = async (clickInfo: any) => {
+  const handleEventClick = (clickInfo: any) => {
     const event = clickInfo.event;
-
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
-
-    const isOwner = !!user && event.extendedProps.user_id === user.id;
+    const isOwner = user?.uid === event.extendedProps.user_id;
 
     setSelectedEvent({
       id: event.id,
@@ -170,6 +129,7 @@ export default function HomePage() {
   return (
     <div className={styles.container}>
       <Typography variant="h1">Veckovy – Bokningar</Typography>
+
       <div style={{ maxWidth: '900px', marginTop: '2rem' }}>
         <FullCalendar
           plugins={[
@@ -192,6 +152,7 @@ export default function HomePage() {
         />
       </div>
 
+      {/* Skapa nytt event */}
       <Modal
         isOpen={isCreateModalOpen}
         handleClose={() => setIsCreateModalOpen(false)}
@@ -215,7 +176,7 @@ export default function HomePage() {
             Starttid:
           </label>
           <TimePicker
-            onChange={setNewTime}
+            onChange={(value) => setNewTime(value ?? '12:00')}
             value={newTime}
             disableClock
             clearIcon={null}
@@ -232,6 +193,7 @@ export default function HomePage() {
         </Button>
       </Modal>
 
+      {/* Visa event */}
       {selectedEvent && (
         <Modal
           isOpen={isModalOpen}
