@@ -48,6 +48,8 @@ declare const classNames: {
   readonly "background-open": "background-open";
   readonly "background-close": "background-close";
   readonly "modal-open": "modal-open";
-  readonly "modal-close": "modal-close";
+  readonly "modal-close-down": "modal-close-down";
+  readonly "modal-close-up": "modal-close-up";
+  readonly "modal-close-fade": "modal-close-fade";
 };
 export = classNames;

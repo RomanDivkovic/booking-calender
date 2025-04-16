@@ -189,7 +189,7 @@ $animation-duration: 0.5s;
   }
 }
 
-.modal-close {
+.modal-close-down {
   animation: slide-down $animation-duration;
 }
 
@@ -200,5 +200,33 @@ $animation-duration: 0.5s;
 
   100% {
     transform: translateY(100%);
+  }
+}
+
+.modal-close-up {
+  animation: slide-up-out $animation-duration;
+}
+
+@keyframes slide-up-out {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.modal-close-fade {
+  animation: fade-out $animation-duration;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
