@@ -3,7 +3,7 @@ import styles from './Footer.module.scss';
 import { useDeviceSize } from '../../utils/functions';
 import { Logo } from '../Logo/Logo';
 import { isWebUrl } from '../../utils/functions';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Icon } from '../Icon/Icon';
 import classNames from 'classnames';
 import Typography from '../Typography/Typography';

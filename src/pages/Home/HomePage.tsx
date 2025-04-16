@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { onValue, ref } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import { db } from '../../../firebase';
-import Typography from '../../components/Typography/Typography';
 import styles from './Home.module.scss';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -131,7 +130,6 @@ export default function HomePage() {
 
   return (
     <div className={styles.container}>
-      {/* <Typography variant="h1">Veckovy – Bokningar</Typography> */}
       <div className={styles['content-container']}>
         <div className={`${styles.card} ${styles['card-3d']}`}>
           <FullCalendar
@@ -142,11 +140,19 @@ export default function HomePage() {
               interactionPlugin
             ]}
             initialView="timeGridWeek"
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-            }}
+            headerToolbar={
+              isMobile
+                ? {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'timeGridWeek,timeGridDay'
+                  }
+                : {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                  }
+            }
             events={events}
             selectable
             dateClick={handleDateClick}
