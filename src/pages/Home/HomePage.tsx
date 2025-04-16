@@ -96,7 +96,7 @@ export default function HomePage() {
       createdAt: new Date().toISOString()
     };
 
-    const { ref: dbRef, push, set } = await import('firebase/database');
+    const { push, set } = await import('firebase/database');
     const newRef = push(ref(db, 'bookings'));
     await set(newRef, bookingData);
 
