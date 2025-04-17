@@ -1,6 +1,7 @@
 @import '../../styles/index.module.scss';
 
 .container {
+  background-color: #f4ead7;
   margin: 0 !important;
   padding: 0;
   width: 100vw;
@@ -9,6 +10,10 @@
   justify-content: center;
   align-items: center;
   perspective: 1000px;
+
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 .content-container {
@@ -30,6 +35,11 @@
   width: rem(400px);
   height: rem(300px);
   perspective: 1200px;
+
+  @include mobile {
+    width: rem(240px);
+    height: rem(240px);
+  }
 }
 
 .card3D {
@@ -65,4 +75,16 @@
   transform: rotateY(180deg);
   background-color: $primary-navy;
   color: $base-white;
+}
+
+.layoutWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: rem(32px);
+
+  @include mobile {
+    flex-direction: column;
+    gap: rem(24px);
+  }
 }

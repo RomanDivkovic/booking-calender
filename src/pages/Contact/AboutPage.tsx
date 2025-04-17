@@ -1,9 +1,11 @@
 import styles from './index.module.scss';
 import Typography from '../../components/Typography/Typography';
+import Loader from '../../components/Loader/Loader';
 
 function AboutPage() {
   return (
     <div className={styles.container}>
+      <Loader show={true} />
       <div className={styles.cardWrapper}>
         <div className={styles.card3D}>
           <div className={styles.front}>

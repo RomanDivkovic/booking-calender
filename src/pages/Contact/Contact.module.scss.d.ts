@@ -35,5 +35,10 @@ declare const classNames: {
   readonly container: "container";
   readonly "content-container": "content-container";
   readonly card: "card";
+  readonly cardFlip: "cardFlip";
+  readonly cardInner: "cardInner";
+  readonly cardFront: "cardFront";
+  readonly cardBack: "cardBack";
+  readonly profileImage: "profileImage";
 };
 export = classNames;
