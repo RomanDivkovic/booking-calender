@@ -36,5 +36,9 @@ declare const classNames: {
   readonly "content-container": "content-container";
   readonly card: "card";
   readonly "card-3d": "card-3d";
+  readonly "fade-enter": "fade-enter";
+  readonly "fade-enter-active": "fade-enter-active";
+  readonly "fade-exit": "fade-exit";
+  readonly "fade-exit-active": "fade-exit-active";
 };
 export = classNames;

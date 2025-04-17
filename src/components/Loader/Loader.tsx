@@ -4,6 +4,7 @@ import scss from './Loader.module.scss';
 import loader from '../../assets/animation/load.json';
 import four from '../../assets/animation/4-loading.json';
 import loading from '../../assets/animation/loading.json';
+import react from '../../assets/animation/react-animation.json';
 import { FixMeLater } from '../../types';
 import { marginToCssProp } from '../../utils/functions';
 
@@ -13,7 +14,7 @@ type LoaderProps = {
   width?: number | string;
   loop?: boolean;
   margin?: FixMeLater;
-  animationType?: 'four' | 'loader' | 'loading';
+  animationType?: 'four' | 'loader' | 'loading' | 'react';
 };
 
 const Loader: React.FC<LoaderProps> = ({
@@ -21,7 +22,7 @@ const Loader: React.FC<LoaderProps> = ({
   width,
   height,
   margin,
-  animationType = 'boxing'
+  animationType = 'react'
 }) => {
   const renderAnimation = () => {
     let animationData;
@@ -34,6 +35,9 @@ const Loader: React.FC<LoaderProps> = ({
         break;
       case 'loading':
         animationData = loading;
+        break;
+      case 'react':
+        animationData = react;
         break;
       default:
         animationData = four;

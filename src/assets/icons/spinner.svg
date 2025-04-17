@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 100 100" fill="none" stroke="#e9bf76" stroke-width="2">
+  <!-- Back face -->
+  <polygon points="30,30 70,30 70,70 30,70" stroke-opacity="0.4" />
+  <!-- Front face -->
+  <polygon points="20,20 60,20 60,60 20,60" />
+  <!-- Connecting lines -->
+  <line x1="20" y1="20" x2="30" y2="30" />
+  <line x1="60" y1="20" x2="70" y2="30" />
+  <line x1="60" y1="60" x2="70" y2="70" />
+  <line x1="20" y1="60" x2="30" y2="70" />
+</svg>
