@@ -159,7 +159,7 @@ const CalendarPage = () => {
           closeButton={{ text: 'Stäng', variant: 'text' }}
         >
           {isUserEvent && (
-            <Button variant="error" onClick={handleDeleteEvent}>
+            <Button variant="danger" onClick={handleDeleteEvent}>
               Ta bort
             </Button>
           )}
