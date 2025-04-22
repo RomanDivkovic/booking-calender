@@ -10,10 +10,10 @@ import { ButtonVariants, TextAligns } from '../../types';
 export type ModalSizes = 'sm' | 'md' | 'lg';
 
 interface Props {
-  iconName: IconNames;
+  iconName?: IconNames;
   iconSize?: IconSizes;
   size?: ModalSizes;
-  title: string | string[] | React.ReactNode;
+  title?: string | string[] | React.ReactNode;
   text?: string | string[] | React.ReactNode;
   align?: TextAligns;
   isOpen: boolean;

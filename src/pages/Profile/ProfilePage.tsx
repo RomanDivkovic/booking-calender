@@ -66,7 +66,7 @@ export default function ProfilePage() {
 
   const handleDeleteAccount = async () => {
     const confirmed = window.confirm(
-      'Är du säker på att du vill ta bort ditt konto och all data? Detta går inte att ångra.'
+      'Are you sure you want to delete your account and all data? This cannot be undone.'
     );
     if (!confirmed || !auth.currentUser || !userId) return;
 
@@ -78,11 +78,11 @@ export default function ProfilePage() {
       // Ta bort själva kontot
       await deleteUser(auth.currentUser);
 
-      alert('Ditt konto har tagits bort.');
+      alert('Your account has been deleted');
       navigate('/login');
     } catch (err) {
       console.error('Fel vid borttagning av konto:', err);
-      alert('Kunde inte ta bort kontot. Försök igen.');
+      alert("Couldn't delete the account, try again.");
     }
   };
 
@@ -90,9 +90,9 @@ export default function ProfilePage() {
     <div className={styles.container}>
       <div className={styles['content-container']}>
         <h1 className="text-2xl font-bold">Hej {displayName}!</h1>
-        <p>Här kan du se och redigera din information 👤</p>
+        <p>Here you can see what information we have about you 👤</p>
         <p>
-          Din kalenderfärg:{' '}
+          Your calendar-color is:{' '}
           <span
             style={{
               backgroundColor: color,

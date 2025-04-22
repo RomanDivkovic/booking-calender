@@ -42,6 +42,25 @@
   }
 }
 
+@import '../../styles/index.module.scss';
+
+.container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: $primary-white;
+  display: flex;
+  justify-content: center;
+  padding: rem(24px);
+}
+
+.content {
+  width: 100%;
+  max-width: rem(600px);
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+}
+
 .card3D {
   width: 100%;
   height: 100%;
