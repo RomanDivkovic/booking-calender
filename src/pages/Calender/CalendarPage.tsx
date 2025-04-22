@@ -172,8 +172,8 @@ const CalendarPage = () => {
           handleClose={() => setIsCreateModalOpen(false)}
           iconName="calendar"
           size="md"
-          title="Skapa bokning"
-          closeButton={{ text: 'Stäng', variant: 'text' }}
+          title="Create booking"
+          closeButton={{ text: 'close', variant: 'text' }}
         >
           <div
             style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
@@ -184,12 +184,12 @@ const CalendarPage = () => {
               onChange={(e) => setNewTitle(e.target.value)}
             />
             <TextArea
-              label="Beskrivning"
+              label="Description"
               value={newDescription}
               onChange={(e) => setNewDescription(e.target.value)}
             />
             <div>
-              <label>Starttid:</label>
+              <label>start-time:</label>
               <TimePicker
                 onChange={setNewStartTime}
                 value={newStartTime}
@@ -203,7 +203,7 @@ const CalendarPage = () => {
               onChange={(e) => setNewDuration(Number(e.target.value))}
             />
             <Button variant="primary" onClick={handleCreateEvent}>
-              Skapa
+              Create
             </Button>
           </div>
         </Modal>

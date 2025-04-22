@@ -34,6 +34,7 @@ declare const classNames: {
   readonly desktopMinWidth: "desktopMinWidth";
   readonly container: "container";
   readonly "content-container": "content-container";
+  readonly "text-box": "text-box";
   readonly card: "card";
   readonly "card-3d": "card-3d";
   readonly "fade-enter": "fade-enter";

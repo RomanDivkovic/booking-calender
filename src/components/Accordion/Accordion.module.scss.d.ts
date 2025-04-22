@@ -32,13 +32,10 @@ declare const classNames: {
   readonly mobileMinWidth: "mobileMinWidth";
   readonly mobileMaxWidth: "mobileMaxWidth";
   readonly desktopMinWidth: "desktopMinWidth";
-  readonly container: "container";
-  readonly "content-container": "content-container";
-  readonly cardWrapper: "cardWrapper";
-  readonly layoutWrapper: "layoutWrapper";
-  readonly content: "content";
-  readonly card3D: "card3D";
-  readonly front: "front";
-  readonly back: "back";
+  readonly accordion: "accordion";
+  readonly accordionHeader: "accordionHeader";
+  readonly accordionBody: "accordionBody";
+  readonly icon: "icon";
+  readonly rotate: "rotate";
 };
 export = classNames;

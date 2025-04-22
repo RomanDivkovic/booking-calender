@@ -19,6 +19,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
+import Typography from '../../components/Typography/Typography';
 
 type CalendarEvent = {
   id: string;
@@ -149,6 +150,11 @@ export default function HomePage() {
   return (
     <div className={styles.container}>
       <div className={styles['content-container']}>
+        <div className={styles['text-box']}>
+          <Typography align="center" variant="h1">
+            Summerway washroom calender{' '}
+          </Typography>
+        </div>
         <Button
           variant="secondary"
           onClick={() => setShowCalendar((prev) => !prev)}
@@ -198,41 +204,90 @@ export default function HomePage() {
       </div>
 
       {/* Create Event Modal */}
+      {/* <Modal
+        align="center"
+        isOpen={isCreateModalOpen}
+        handleClose={() => setIsCreateModalOpen(false)}
+        // iconName="calendar"
+        size="md"
+        closeButton={{ text: 'Close', variant: 'text' }}
+      >
+        <div style={{ height: '100%' }}>
+          <TextField
+            label="Title"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+          />
+          <TextArea
+            label="Description"
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+          />
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ fontWeight: 'bold', display: 'block' }}>
+              Start time:
+            </label>
+            <TimePicker
+              onChange={(value) => setNewTime(value ?? '12:00')}
+              value={newTime}
+              disableClock
+              clearIcon={null}
+              format="HH:mm"
+            />
+          </div>
+          <TextField
+            label="Duration (hours)"
+            value={newDuration}
+            onChange={(e) => setNewDuration(Number(e.target.value))}
+          />
+          <Button variant="primary" onClick={handleCreateEvent}>
+            Create
+          </Button>
+        </div>
+      </Modal> */}
       <Modal
         isOpen={isCreateModalOpen}
         handleClose={() => setIsCreateModalOpen(false)}
-        iconName="calendar"
+        iconName={isMobile ? '' : 'calendar'}
         size="md"
-        title="Create new event"
-        closeButton={{ text: 'Close', variant: 'text' }}
+        align="center"
+        title="Create booking"
+        closeButton={{ text: 'close', variant: 'text' }}
       >
-        <TextField
-          label="Title"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-        />
-        <TextArea
-          label="Description"
-          value={newDescription}
-          onChange={(e) => setNewDescription(e.target.value)}
-        />
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ fontWeight: 'bold', display: 'block' }}>
-            Start time:
-          </label>
-          <TimePicker
-            onChange={(value) => setNewTime(value ?? '12:00')}
-            value={newTime}
-            disableClock
-            clearIcon={null}
-            format="HH:mm"
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            // gap: '1rem',
+            alignItems: 'center'
+          }}
+        >
+          <TextField
+            label="Titel"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+          />
+          <TextArea
+            label="Description"
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+          />
+          <div>
+            <label>start-time: </label>
+            <TimePicker
+              onChange={(value) => setNewTime(value ?? '12:00')}
+              value={newTime}
+              disableClock
+              clearIcon={null}
+              format="HH:mm"
+            />
+          </div>
+          <TextField
+            label="Varaktighet (timmar)"
+            value={newDuration}
+            onChange={(e) => setNewDuration(Number(e.target.value))}
           />
         </div>
-        <TextField
-          label="Duration (hours)"
-          value={newDuration}
-          onChange={(e) => setNewDuration(Number(e.target.value))}
-        />
         <Button variant="primary" onClick={handleCreateEvent}>
           Create
         </Button>
