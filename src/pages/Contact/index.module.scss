@@ -107,3 +107,28 @@
     gap: rem(24px);
   }
 }
+
+.accordionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: rem(20px);
+  padding: rem(40px);
+  max-width: rem(1000px);
+  width: 100%;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    padding: rem(24px);
+  }
+}
+
+.accordionSection {
+  margin-top: rem(40px);
+  max-width: rem(600px);
+  width: 100%;
+  padding: 0 rem(16px);
+
+  @include mobile {
+    padding: 0 rem(8px);
+  }
+}

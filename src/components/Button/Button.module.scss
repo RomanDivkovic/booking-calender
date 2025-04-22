@@ -21,7 +21,7 @@
   justify-content: center;
 
   &:focus-visible {
-    outline: rem(4px) solid $accents-focused;
+    outline: rem(4px) solid $gold-active;
   }
 }
 
@@ -45,7 +45,7 @@
   min-width: rem(168px);
 
   &:focus-visible {
-    outline: rem(4px) solid $accents-pressed;
+    outline: rem(4px) solid $gold-active;
   }
 }
 
@@ -155,7 +155,7 @@
 .secondary {
   @extend .base;
   background-color: transparent;
-  color: $primary-green;
+  color: $primary-gold;
   border: rem(1px) solid;
 
   &:hover {
@@ -194,7 +194,7 @@
   }
 
   &:hover {
-    background-color: $accents-hover-blue;
+    background-color: $gold-hover;
     color: $primary-white;
 
     & .button-text {
@@ -203,7 +203,7 @@
   }
 
   &:active {
-    background-color: $accents-pressed;
+    background-color: $gold-active;
   }
 
   &-disabled {

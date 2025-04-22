@@ -36,6 +36,8 @@ declare const classNames: {
   readonly "content-container": "content-container";
   readonly cardWrapper: "cardWrapper";
   readonly layoutWrapper: "layoutWrapper";
+  readonly accordionGrid: "accordionGrid";
+  readonly accordionSection: "accordionSection";
   readonly content: "content";
   readonly card3D: "card3D";
   readonly front: "front";

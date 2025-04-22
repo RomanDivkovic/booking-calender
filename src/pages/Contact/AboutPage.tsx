@@ -1,49 +1,75 @@
+import { useState } from 'react';
 import styles from './index.module.scss';
 import Typography from '../../components/Typography/Typography';
 import Loader from '../../components/Loader/Loader';
 import Accordion from '../../components/Accordion/Accordion';
 
+const accordionData = [
+  {
+    title: 'What is this app?',
+    content: `This app helps manage shared resources like laundry rooms or household bookings. Everyone sees the calendar in real time.`
+  },
+  {
+    title: 'Who can use it?',
+    content: `Anyone in the household! All users can view events, but only edit their own.`
+  },
+  {
+    title: 'What tech is it built with?',
+    content: `React, TypeScript, Firebase Realtime Database, FullCalendar, and Vercel.`
+  },
+  {
+    title: 'Is it mobile-friendly?',
+    content: `Yes! The UI is fully responsive and works beautifully on phones and tablets.`
+  }
+];
+
 function AboutPage() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const handleToggle = (index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
+
   return (
     <div className={styles.container}>
       <Loader show={true} />
 
-      <div className={styles.content}>
-        <Typography variant="h1" align="center" margin={{ b: 20 }}>
-          About the app
-        </Typography>
+      <div className={styles.cardWrapper}>
+        <div className={styles.card3D}>
+          <div className={styles.front}>
+            <Typography variant="h1">About Us</Typography>
+            <Typography variant="p">
+              We are an app for booking shared resources like laundry 🧺 or
+              other household services. Our calendar syncs everything in real
+              time! ⚡
+            </Typography>
+          </div>
+          <div className={styles.back}>
+            <Typography variant="h1">🔥 Tech stack</Typography>
+            <Typography variant="p">
+              React + TypeScript
+              <br />
+              Firebase Realtime DB
+              <br />
+              FullCalendar + Vercel
+              <br />
+              ❤️ by Roman
+            </Typography>
+          </div>
+        </div>
+      </div>
 
-        <Accordion title="💡 What is this app?">
-          <Typography variant="p">
-            This is a shared booking app for resources like laundry rooms,
-            household items, or anything that needs scheduling within a group.
-            All data is synced in real time between users!
-          </Typography>
-        </Accordion>
-
-        <Accordion title="🧪 Features">
-          <ul>
-            <li>✅ Create & view events in real time</li>
-            <li>📱 Optimized for mobile and desktop</li>
-            <li>👥 Every user can see all bookings, but only edit their own</li>
-            <li>🔒 Firebase Auth for secure login</li>
-          </ul>
-        </Accordion>
-
-        <Accordion title="🛠 Tech stack">
-          <ul>
-            <li>⚛️ React + TypeScript</li>
-            <li>🔥 Firebase Realtime Database</li>
-            <li>📆 FullCalendar.js</li>
-            <li>💾 Vercel for deployment</li>
-          </ul>
-        </Accordion>
-
-        <Accordion title="👨‍💻 Developers">
-          <Typography variant="p">
-            Built by Roman Divkovic & Anna Widfeldt with love ❤️
-          </Typography>
-        </Accordion>
+      <div className={styles.accordionGrid}>
+        {accordionData.map((item, index) => (
+          <Accordion
+            key={index}
+            title={item.title}
+            isOpen={openIndex === index}
+            onToggle={() => handleToggle(index)}
+          >
+            <Typography variant="p">{item.content}</Typography>
+          </Accordion>
+        ))}
       </div>
     </div>
   );
