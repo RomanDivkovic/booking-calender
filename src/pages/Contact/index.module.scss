@@ -1,56 +1,29 @@
 @import '../../styles/index.module.scss';
 
 .container {
-  background-color: #f4ead7;
-  margin: 0 !important;
-  padding: 0;
+  min-height: 100vh;
   width: 100vw;
-  height: 100vh;
+  background-color: $primary-white;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  perspective: 1000px;
-
-  @include mobile {
-    flex-direction: column;
-  }
+  padding: 0;
+  overflow-x: hidden;
 }
 
 .content-container {
+  flex-direction: column;
+}
+
+.first-content-container {
+  flex-direction: row;
+}
+
+.contentContainer {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
-  height: 600px;
-  width: 600px;
-  background-color: $primary-white;
-  align-self: center;
-  margin-top: 50px;
-
-  @include mobile {
-    width: rem(342px);
-  }
-}
-
-.cardWrapper {
-  width: rem(400px);
-  height: rem(300px);
-  perspective: 1200px;
-
-  @include mobile {
-    width: rem(240px);
-    height: rem(240px);
-  }
-}
-
-@import '../../styles/index.module.scss';
-
-.container {
-  min-height: 100vh;
-  width: 100%;
-  background-color: $primary-white;
-  display: flex;
-  justify-content: center;
-  padding: rem(24px);
+  align-items: center;
 }
 
 .content {
@@ -113,13 +86,38 @@
   grid-template-columns: 1fr 1fr;
   gap: rem(20px);
   padding: rem(40px);
-  max-width: rem(1000px);
-  width: 100%;
+  min-width: 100%;
 
   @include mobile {
     grid-template-columns: 1fr;
     padding: rem(24px);
+    min-width: 90%;
   }
+}
+
+.accordionGrid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: rem(24px);
+  max-width: rem(1000px);
+  margin-top: rem(40px);
+  flex-wrap: wrap;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: center;
+    gap: rem(16px);
+  }
+}
+
+.accordionColumn {
+  flex: 1;
+  min-width: rem(300px);
+  max-width: rem(480px);
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
 }
 
 .accordionSection {
@@ -130,5 +128,59 @@
 
   @include mobile {
     padding: 0 rem(8px);
+  }
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  height: 600px;
+  width: 600px;
+  background-color: $primary-white;
+  align-self: center;
+  margin-top: 50px;
+
+  @include mobile {
+    width: rem(342px);
+  }
+}
+
+.cardWrapper {
+  width: rem(400px);
+  height: rem(300px);
+  perspective: 1200px;
+
+  @include mobile {
+    width: rem(240px);
+    height: rem(240px);
+  }
+}
+
+.topSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: rem(32px);
+  flex-wrap: wrap;
+
+  @include mobile {
+    flex-direction: column;
+    gap: rem(16px);
+  }
+}
+
+.loaderBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: rem(300px);
+  width: rem(300px);
+  margin-top: rem(200px);
+
+  @include mobile {
+    width: rem(240px);
+    height: rem(240px);
+    margin-top: rem(64px);
   }
 }

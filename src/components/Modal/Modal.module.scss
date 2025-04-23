@@ -106,7 +106,7 @@
 }
 
 .buttons-lg {
-  border-top: rem(1px) solid $secondary-middle-blue;
+  border-top: rem(1px) solid $gold-secondary-middle;
 
   @include mobile {
     padding: rem(16px) rem(24px);
@@ -118,7 +118,7 @@
 }
 
 .buttons-md {
-  border-top: rem(1px) solid $secondary-middle-blue;
+  border-top: rem(1px) solid $gold-secondary-middle;
 
   @include mobile {
     padding: rem(16px) rem(24px);
