@@ -4,7 +4,6 @@ import { getDatabase, ref, get, remove } from 'firebase/database';
 import styles from './BookingPage.module.scss';
 import CustomAlert from '../../components/Alert/Alert';
 import Typography from '../../components/Typography/Typography';
-import Loader from '../../components/Loader/Loader';
 import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
 
 type Booking = {
