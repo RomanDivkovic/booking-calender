@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, get } from 'firebase/database';
+import { getDatabase, ref, get, remove } from 'firebase/database';
 import styles from './BookingPage.module.scss';
+import CustomAlert from '../../components/Alert/Alert';
+import Typography from '../../components/Typography/Typography';
+import Loader from '../../components/Loader/Loader';
+import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
 
 type Booking = {
   id: string;
@@ -12,6 +16,7 @@ type Booking = {
 export default function BookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -53,29 +58,69 @@ export default function BookingsPage() {
     fetchBookings();
   }, []);
 
+  const handleDelete = async (id: string) => {
+    const db = getDatabase();
+    const bookingRef = ref(db, `bookings/${id}`);
+    try {
+      await remove(bookingRef);
+      setBookings((prev) => prev.filter((b) => b.id !== id));
+    } catch (err) {
+      console.error('Kunde inte ta bort bokningen:', err);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles['content-container']}>
-        <h1 className="text-2xl font-bold">Mina bokningar</h1>
-        <p>Här kan du se alla dina bokningar 📆</p>
+        <Typography variant="h1">My bookings</Typography>
+        <Typography variant="p">Here are your bookings 📆</Typography>
 
         {loading ? (
-          <p>Laddar bokningar...</p>
+          <LoadingScreen />
         ) : bookings.length === 0 ? (
           <p>Inga bokningar hittades.</p>
         ) : (
           <ul className="mt-4 space-y-2">
             {bookings.map((booking) => (
-              <li
-                key={booking.id}
-                className="border p-3 rounded bg-white shadow"
-              >
-                <strong>{booking.title}</strong> – {booking.date}
+              <li key={booking.id} className={styles.bookingItem}>
+                <div className={styles.bookingInfo}>
+                  <Typography variant="p">
+                    <strong>{booking.title}</strong> – {booking.date}
+                  </Typography>
+                  <button
+                    onClick={() => setConfirmDeleteId(booking.id)}
+                    className={styles.deleteButton}
+                    aria-label="Delete booking"
+                  >
+                    ❌
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
         )}
       </div>
+      {confirmDeleteId && (
+        <CustomAlert
+          visible={true}
+          onClose={() => setConfirmDeleteId(null)}
+          title="Ta bort bokning?"
+          body="Vill du verkligen ta bort din bokning? Detta går inte att ångra."
+          buttons={[
+            {
+              text: 'Avbryt',
+              onPress: () => setConfirmDeleteId(null)
+            },
+            {
+              text: 'Ja, ta bort',
+              onPress: () => {
+                handleDelete(confirmDeleteId);
+                setConfirmDeleteId(null);
+              }
+            }
+          ]}
+        />
+      )}
     </div>
   );
 }

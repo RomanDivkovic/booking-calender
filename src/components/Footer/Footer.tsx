@@ -172,7 +172,6 @@ type Props = {
 
 const SectionLink = ({ data: { to, display } }: Props) => {
   const { isDesktop } = useDeviceSize();
-  console.log(isDesktop);
   if (isWebUrl(to)) {
     return isDesktop ? (
       <div className={styles.box}>

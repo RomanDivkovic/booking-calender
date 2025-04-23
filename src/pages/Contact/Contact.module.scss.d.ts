@@ -1,15 +1,12 @@
 declare const classNames: {
   readonly primaryGold: "primaryGold";
   readonly primaryWhite: "primaryWhite";
-  readonly "primary-navy": "primary-navy";
   readonly "secondary-middle-green": "secondary-middle-green";
-  readonly "secondary-navy": "secondary-navy";
-  readonly secondaryLightBlue: "secondaryLightBlue";
-  readonly secondaryMiddleGray: "secondaryMiddleGray";
-  readonly secondaryLightGray: "secondaryLightGray";
   readonly secondaryMiddleGreen: "secondaryMiddleGreen";
   readonly secondaryLightGreen: "secondaryLightGreen";
   readonly secondaryGold: "secondaryGold";
+  readonly extraGoldDark: "extraGoldDark";
+  readonly extraGoldLight: "extraGoldLight";
   readonly secondaryLightGold: "secondaryLightGold";
   readonly secondaryMiddleGold: "secondaryMiddleGold";
   readonly secondaryDarkGold: "secondaryDarkGold";
@@ -33,10 +30,11 @@ declare const classNames: {
   readonly mobileMaxWidth: "mobileMaxWidth";
   readonly desktopMinWidth: "desktopMinWidth";
   readonly container: "container";
-  readonly "content-container": "content-container";
-  readonly card: "card";
+  readonly cardRow: "cardRow";
+  readonly genderSymbol: "genderSymbol";
   readonly cardFlip: "cardFlip";
   readonly cardInner: "cardInner";
+  readonly flipped: "flipped";
   readonly cardFront: "cardFront";
   readonly cardBack: "cardBack";
   readonly profileImage: "profileImage";

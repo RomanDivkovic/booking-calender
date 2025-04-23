@@ -15,7 +15,7 @@ import TimePicker from 'react-time-picker';
 import TextArea from '../../components/Textarea/Textarea';
 import { useDeviceSize } from '../../utils/functions';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { remove } from 'firebase/database';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
@@ -145,6 +145,22 @@ export default function HomePage() {
     setIsModalOpen(true);
   };
 
+  const handleDeleteEvent = async () => {
+    if (!selectedEvent || !currentUser) return;
+
+    if (selectedEvent.user_id !== currentUser.uid) {
+      alert('You can only delete your own events.');
+      return;
+    }
+
+    try {
+      await remove(ref(db, `bookings/${selectedEvent.id}`));
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Failed to delete event:', error);
+    }
+  };
+
   if (loading) return <LoadingScreen />;
 
   return (
@@ -157,7 +173,7 @@ export default function HomePage() {
         </div>
         <Button
           variant="secondary"
-          onClick={() => setShowCalendar((prev) => !prev)}
+          onClick={() => setShowCalendar(!showCalendar)}
         >
           {showCalendar ? 'Hide calendar' : 'Show calendar'}
         </Button>
@@ -203,48 +219,6 @@ export default function HomePage() {
         </AnimatePresence>
       </div>
 
-      {/* Create Event Modal */}
-      {/* <Modal
-        align="center"
-        isOpen={isCreateModalOpen}
-        handleClose={() => setIsCreateModalOpen(false)}
-        // iconName="calendar"
-        size="md"
-        closeButton={{ text: 'Close', variant: 'text' }}
-      >
-        <div style={{ height: '100%' }}>
-          <TextField
-            label="Title"
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-          />
-          <TextArea
-            label="Description"
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-          />
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ fontWeight: 'bold', display: 'block' }}>
-              Start time:
-            </label>
-            <TimePicker
-              onChange={(value) => setNewTime(value ?? '12:00')}
-              value={newTime}
-              disableClock
-              clearIcon={null}
-              format="HH:mm"
-            />
-          </div>
-          <TextField
-            label="Duration (hours)"
-            value={newDuration}
-            onChange={(e) => setNewDuration(Number(e.target.value))}
-          />
-          <Button variant="primary" onClick={handleCreateEvent}>
-            Create
-          </Button>
-        </div>
-      </Modal> */}
       <Modal
         isOpen={isCreateModalOpen}
         handleClose={() => setIsCreateModalOpen(false)}
@@ -304,18 +278,22 @@ export default function HomePage() {
           text={selectedEvent.description || 'No description'}
           closeButton={{ text: 'Close', variant: 'text' }}
         >
+          <Typography align="center" variant="p" margin={{ b: 16 }}>
+            {new Date(selectedEvent.start).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit'
+            })}{' '}
+            -{' '}
+            {new Date(selectedEvent.end).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit'
+            })}
+          </Typography>
+
           {isUserEvent && (
-            <p>
-              {new Date(selectedEvent.start).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-              })}{' '}
-              -{' '}
-              {new Date(selectedEvent.end).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
-            </p>
+            <Button variant="danger" onClick={handleDeleteEvent}>
+              Delete event
+            </Button>
           )}
         </Modal>
       )}

@@ -1,7 +1,7 @@
 @import '../../styles/index.module.scss';
 
 .base {
-  border-radius: rem(20px);
+  border-radius: rem(18px);
   border: none;
   box-sizing: border-box;
   padding: rem(12px) rem(32px);
@@ -159,18 +159,18 @@
   border: rem(1px) solid;
 
   &:hover {
-    border-color: $accents-hover-blue;
-    color: $accents-hover-blue;
+    border-color: $gold-hover;
+    color: $gold-hover;
   }
 
   &:active {
-    border-color: $accents-pressed;
-    color: $secondary-middle-gray;
+    border-color: $gold-active;
+    color: $gold-active;
   }
 }
 
 .light {
-  border-color: $secondary-middle-blue;
+  border-color: $gold-secondary-light;
 }
 
 .dark {

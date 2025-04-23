@@ -21,7 +21,10 @@ const Accordion = ({ title, children, isOpen, onToggle }: AccordionProps) => {
           className={`${styles.icon} ${isOpen ? styles.rotate : ''}`}
         />
       </button>
-      {isOpen && <div className={styles.accordionBody}>{children}</div>}
+
+      <div className={`${styles.accordionBody} ${isOpen ? styles.open : ''}`}>
+        {children}
+      </div>
     </div>
   );
 };

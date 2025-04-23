@@ -18,6 +18,7 @@ type CalendarEvent = {
   end: string;
   description?: string;
   user_id?: string;
+  color?: string; // 🆕
 };
 
 const CalendarPage = () => {
@@ -38,24 +39,32 @@ const CalendarPage = () => {
 
   useEffect(() => {
     const bookingsRef = ref(db, 'bookings');
-    onValue(bookingsRef, (snapshot) => {
-      const data = snapshot.val();
-      const parsedEvents: CalendarEvent[] = [];
+    const profilesRef = ref(db, 'profiles');
 
-      for (const key in data) {
-        const event = data[key];
-        parsedEvents.push({
-          id: key,
-          title: event.title,
-          description: event.description,
-          start: event.start,
-          end: event.end,
-          user_id: event.user_id
+    const fetchData = () => {
+      onValue(bookingsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        const allBookings = Object.entries(data).map(([id, value]: any) => ({
+          id,
+          ...value
+        }));
+
+        // Hämta profilfärger
+        onValue(profilesRef, (profileSnap) => {
+          const profiles = profileSnap.val() || {};
+          const enriched = allBookings.map((booking) => ({
+            ...booking,
+            color: profiles?.[booking.user_id]?.color || '#ccc'
+          }));
+
+          setEvents(enriched);
         });
-      }
+      });
+    };
 
-      setEvents(parsedEvents);
-    });
+    fetchData();
   }, []);
 
   const handleDateClick = (arg: { dateStr: string }) => {
@@ -143,9 +152,12 @@ const CalendarPage = () => {
         initialView="dayGridMonth"
         dateClick={handleDateClick}
         eventClick={handleEventClick}
-        events={events}
-        eventContent={renderEventContent}
         height="auto"
+        events={events.map((event) => ({
+          ...event,
+          backgroundColor: event.color || '#ccc'
+        }))}
+        eventContent={renderEventContent}
       />
 
       {selectedEvent && (
@@ -214,7 +226,15 @@ const CalendarPage = () => {
 
 function renderEventContent(eventInfo: any) {
   return (
-    <div style={{ fontSize: '12px', padding: '4px' }}>
+    <div
+      style={{
+        fontSize: '12px',
+        padding: '4px',
+        color: 'white',
+        backgroundColor: eventInfo.event.backgroundColor,
+        borderRadius: '4px'
+      }}
+    >
       <strong>{eventInfo.timeText}</strong>
       <div>{eventInfo.event.title}</div>
     </div>
