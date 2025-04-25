@@ -1,14 +1,16 @@
-import Typography from '../../components/Typography/Typography';
 import { FormEvent, useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, set, get } from 'firebase/database';
 import { auth, db } from '../../../firebase';
+
+import Typography from '../../components/Typography/Typography';
 import Button from '../../components/Button/Button';
-import styles from './LoginPage.module.scss';
-import LinkTo from '../../components/LinkTo/LinkTo';
-import { Icon } from '../../components/Icon/Icon';
 import TextField from '../../components/Textfield/Textfield';
 import CustomAlert from '../../components/Alert/Alert';
+import LinkTo from '../../components/LinkTo/LinkTo';
+import { Icon } from '../../components/Icon/Icon';
+
+import styles from './Register.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 const getRandomColor = (): string => {
@@ -69,7 +71,7 @@ export const RegisterPage = () => {
 
       if (!snapshot.exists()) {
         await set(profileRef, {
-          display_name: displayName || email || 'User',
+          display_name: displayName || email,
           color: getRandomColor()
         });
       }
@@ -83,19 +85,18 @@ export const RegisterPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles['content-container']}>
-        <div>
-          <LinkTo to="/" animation>
-            <Icon
-              color="primary"
-              name="arrow-right"
-              size="md"
-              margin={{ r: 4, b: 3 }}
-              flipIconDirection={true}
-            />
-            Back
-          </LinkTo>
-        </div>
+      <div className={styles['text-box']}>
+        <LinkTo to="/" animation>
+          <Icon
+            color="primary"
+            name="arrow-right"
+            size="md"
+            margin={{ r: 4, b: 3 }}
+            flipIconDirection={true}
+          />
+          Back
+        </LinkTo>
+
         <Typography align="center" margin={{ b: 3 }} variant="h1">
           Registrering
         </Typography>
@@ -115,7 +116,7 @@ export const RegisterPage = () => {
             errorMessage={emailError}
           />
           <TextField
-            label="Lösenord"
+            label="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -123,7 +124,7 @@ export const RegisterPage = () => {
             errorMessage={passwordError}
           />
           <TextField
-            label="Upprepa lösenord"
+            label="Repeat password"
             type="password"
             value={repeatPassword}
             onChange={(e) => setRepeatPassword(e.target.value)}

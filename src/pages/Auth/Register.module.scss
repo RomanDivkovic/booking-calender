@@ -1,0 +1,32 @@
+@import '../../styles/index.module.scss';
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: rem(24px);
+  background: linear-gradient(135deg, $primary-gold 0%, $primary-white 100%);
+}
+
+.text-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: rem(24px);
+  box-shadow: 0 rem(10px) rem(40px) rgba(0, 0, 0, 0.2);
+  padding: rem(32px);
+  width: 100%;
+  max-width: rem(520px);
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+}
